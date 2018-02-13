@@ -91,10 +91,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p><a href="http://www.jianshu.com/p/288ebe5396a0" target="_blank" rel="noopener">http://www.jianshu.com/p/288ebe5396a0</a></p>
-<h1 id="1-基础环境"><a href="#1-基础环境" class="headerlink" title="1 基础环境"></a>1 基础环境</h1><h3 id="添加一个非root管理员"><a href="#添加一个非root管理员" class="headerlink" title="添加一个非root管理员"></a>添加一个非root管理员</h3></blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useradd -m jin</span><br><span class="line">passwd jin</span><br><span class="line"># 添加sudo权限</span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">chmod u-w /etc/sudoers</span><br></pre></td></tr></table></figure>
+        <h1 id="1-基础环境"><a href="#1-基础环境" class="headerlink" title="1 基础环境"></a>1 基础环境</h1><h3 id="添加一个非root管理员"><a href="#添加一个非root管理员" class="headerlink" title="添加一个非root管理员"></a>添加一个非root管理员</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useradd -m jin</span><br><span class="line">passwd jin</span><br><span class="line"># 添加sudo权限</span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">chmod u-w /etc/sudoers</span><br></pre></td></tr></table></figure>
 <p>允许ssh登陆<br>
         
           <p class="article-more-link">
