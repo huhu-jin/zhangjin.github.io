@@ -83,7 +83,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/24/python/生产环境持续集成/">部署持续集成</a>
+      <a class="article-title" href="/2018/01/24/python/生产环境持续集成/">django 部署 持续集成</a>
     </h1>
   
 
@@ -186,7 +186,7 @@
         <a href="http://zhangjin.xyz/2018/01/24/python/生产环境持续集成/#disqus_thread" class="article-comment-link">留言</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/配置/">配置</a></li></ul>
 
     </footer>
   </div>
@@ -198,8 +198,8 @@
   
     <article id="post-python/获取文字显示宽度" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/24/python/获取文字显示宽度/" class="article-date">
-  <time datetime="2018-01-23T16:00:00.000Z" itemprop="datePublished">2018-01-24</time>
+    <a href="/2017/08/24/python/获取文字显示宽度/" class="article-date">
+  <time datetime="2017-08-23T16:00:00.000Z" itemprop="datePublished">2017-08-24</time>
 </a>
     
   <div class="article-category">
@@ -214,7 +214,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/24/python/获取文字显示宽度/">获取文字显示宽度</a>
+      <a class="article-title" href="/2017/08/24/python/获取文字显示宽度/">python 获取文字显示宽度</a>
     </h1>
   
 
@@ -229,13 +229,108 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/01/24/python/获取文字显示宽度/" data-id="cjdlpjcms0007387cu4l5hee1" class="article-share-link">分享</a>
+      <a data-url="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/" data-id="cjdlpjcms0007387cu4l5hee1" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2018/01/24/python/获取文字显示宽度/#disqus_thread" class="article-comment-link">留言</a>
+        <a href="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/#disqus_thread" class="article-comment-link">留言</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/note/">note</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技/">技</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-python/进程(process),线程(thread)，协程( coroutine)，并发，异步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" class="article-date">
+  <time datetime="2016-11-10T04:39:04.000Z" itemprop="datePublished">2016-11-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/">进程(process),线程(thread)，协程( coroutine)，并发，异步</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>[toc]<br>进程(process),线程(thread)，协程( coroutine)，并发，异步</p>
+<h2 id="1-GIL"><a href="#1-GIL" class="headerlink" title="1 GIL"></a>1 GIL</h2><p>计算密集型(cpu-bound)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countdown</span><span class="params">(n)</span>:</span></span><br><span class="line">         <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">         n -= <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>顺序执行两次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COUNT = 100000000 </span><br><span class="line">countdown(COUNT)</span><br><span class="line">countdown(COUNT)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多线程的执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">t1 = Thread(target=countdown,args=(COUNT,))</span><br><span class="line">t2 = Thread(target=countdown,args=(COUNT,))</span><br><span class="line">t1.start(); t2.start()</span><br><span class="line">t1.join(); t2.join()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>结果多线程的比顺序执行的慢？？<br>python的thread是假的thread，因为Python的解释器只允许一个线程的执行。线程无法利用多核的优势。<br>每次释放GIL锁，线程进行锁竞争、切换线程，会消耗资源。并且由于GIL锁存在，<strong>python里一个进程永远只能同时执行一个线程(拿到GIL的线程才能执行)</strong>，这就是为什么在多核CPU上，python的多线程效率并不高。<br><strong>python下想要充分利用多核CPU，就用多进程</strong></p>
+<p>每个进程有各自独立的GIL，互不干扰，这样就可以真正意义上的并行执行，所以在python中，多进程的执行效率优于多线程(仅仅针对多核CPU而言)。</p>
+<p>###1.1 GIL特点</p>
+<ul>
+<li>Only one Python thread can execute in the interpreter at once<pre><code>（The interpreter has a global variable that simply points to the ThreadState structure of the currently running thread）
+</code></pre></li>
+<li>All thread scheduling is left to the host operating system</li>
+<li>GIL 保证了线程的互斥<br>###1.2 GIL行为</li>
+<li>当线程运行的时候 hold GIL</li>
+<li>当被I/O block的时候，thread release GIL(所以io的时候可以多线程)，</li>
+</ul>
+<h2 id="2-并发-concurrentcy-同步（synchronous）-IO和异步（asynchronous）-IO，阻塞（blocking）-IO和非阻塞（non-blocking）IO"><a href="#2-并发-concurrentcy-同步（synchronous）-IO和异步（asynchronous）-IO，阻塞（blocking）-IO和非阻塞（non-blocking）IO" class="headerlink" title="2 并发(concurrentcy), 同步（synchronous） IO和异步（asynchronous） IO，阻塞（blocking） IO和非阻塞（non-blocking）IO"></a>2 并发(concurrentcy), 同步（synchronous） IO和异步（asynchronous） IO，阻塞（blocking） IO和非阻塞（non-blocking）IO</h2><ul>
+<li>阻塞/非阻塞 它们是程序在等待消息的状态。</li>
+<li>同步/异步 是程序获得关注消息的通知机制<br>组合</li>
+<li>同步阻塞 :效率最低（日志程序）</li>
+<li>同步非阻塞：效率不高（需要轮询）</li>
+<li>异步阻塞：？一般模式线程回调</li>
+<li>异步回调：？iocp<h3 id="2-1-并发-concurrentcy"><a href="#2-1-并发-concurrentcy" class="headerlink" title="2.1 并发(concurrentcy)"></a>2.1 并发(concurrentcy)</h3></li>
+<li>csapp中的定义<br>logical control flows are concurrent if they overlap in time<h2 id="3-进程-process"><a href="#3-进程-process" class="headerlink" title="3  进程(process)"></a>3  进程(process)</h2>定义：进程是正在运行程序的实例，如chrome<br>进程的三种状态：</li>
+<li>就绪态</li>
+<li>执行态</li>
+<li>阻塞态</li>
+</ul>
+<p>进程是基于计算机系统的异常。进程切换是需要保存上下文环境(一些寄存器，以及栈的信息。<br>子进程和父进程具有相同的文件描述符。<br>不同的进程具有不同的地址空间，变量无法共享。调度有操作系统完成。</p>
+<h2 id="4-线程-thread"><a href="#4-线程-thread" class="headerlink" title="4 线程(thread)"></a>4 线程(thread)</h2><p>一个进程，包含多个线程<br>线程是一种轻量进程，实际上在linux内核中，两者几乎没有差别，除了一点——线程并不产生新的地址空间和资源描述符表，而是复用父进程的。线程的调度和进程一样，都必须陷入内核态。调度有操作系统完成。<br>线程模型主要通过陷入切换上下文</p>
+<h2 id="5-协程-coroutine"><a href="#5-协程-coroutine" class="headerlink" title="5 协程(coroutine)"></a>5 协程(coroutine)</h2><p>一个线程，包含多协程。协程不需要陷入内核。<br><strong>函数</strong>，所有语言中都是层级调用，比如A调用B，B在执行过程中又调用了C，C执行完毕返回，B执行完毕返回，最后是A执行完毕。</p>
+<p><strong>函数的调用</strong> 是通过栈来实现的，一个线程就是执行一个子函数<br>栈帧保存了给出代码的的信息和上下文，其中包含最后执行的指令，全局和局部命名空间，异常状态等信息。<code>f_valueblock</code>保存了数据，<code>b_blockstack</code>保存了异常和循环控制方法<sup>[2]</sup>。<br>python 的 generator 只保留栈帧上下文，不保留调用栈，而且 generator 函数不允许 return；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></span><br><span class="line">    x = <span class="number">1</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">(y)</span>:</span></span><br><span class="line">        z = y + <span class="number">2</span>  <span class="comment"># &lt;--- (3) ... and the interpreter is here.</span></span><br><span class="line">        <span class="keyword">return</span> z</span><br><span class="line">    <span class="keyword">return</span> bar(x)  <span class="comment"># &lt;--- (2) ... which is returning a call to bar ...</span></span><br><span class="line">foo()              <span class="comment"># &lt;--- (1) We're in the middle of a call to foo ...</span></span><br></pre></td></tr></table></figure></p>
+<p>那么，相应的调用栈如下，一个py文件，一个类，一个函数都是一个代码块，对应者一个Frame，保存着上下文环境以及字节码指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">c   ---------------------------</span><br><span class="line">a  | bar Frame                 | -&gt; block stack: []</span><br><span class="line">l  |     (newest)              | -&gt; data stack: [1, 2]</span><br><span class="line">l   ---------------------------</span><br><span class="line">   | foo Frame                 | -&gt; block stack: []</span><br><span class="line">s  |                           | -&gt; data stack: [&lt;Function foo.&lt;locals&gt;.bar at 0x10d389680&gt;, 1]</span><br><span class="line">t   ---------------------------</span><br><span class="line">a  | main (module) Frame       | -&gt; block stack: []</span><br><span class="line">c  |       (oldest)            | -&gt; data stack: [&lt;Function foo at 0x10d3540e0&gt;]</span><br><span class="line">k   ---------------------------</span><br></pre></td></tr></table></figure></p>
+<p>携程看起来像函数，但是内部可以中断。举例如<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">A</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'1'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'2'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">B</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'x'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'y'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'z'</span></span><br><span class="line">``` </span><br><span class="line">假设程序是由携程执行的，，在执行A的过程中，可以随时中断，去执行B，B也可能在执行过程中中断再去执行A，结果可能是：</span><br></pre></td></tr></table></figure></p>
+<p>1<br>2<br>x<br>y<br>3<br>z<br>```</p>
+<h3 id="5-1-优点"><a href="#5-1-优点" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li>协程极高的执行效率</li>
+<li>不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多。</li>
+</ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><blockquote>
+<p>[1] python cookbook作者的分析 <a href="http://www.dabeaz.com/finalgenerator/" target="_blank" rel="noopener">http://www.dabeaz.com/finalgenerator/</a><br>[2] 生成器的源码分析 <a href="http://www.cnblogs.com/coder2012/p/4990834.html" target="_blank" rel="noopener">http://www.cnblogs.com/coder2012/p/4990834.html</a><br>[3 ]<a href="http://www.jianshu.com/p/02b7a279c588" target="_blank" rel="noopener">http://www.jianshu.com/p/02b7a279c588</a><br>[4]python的GIL <a href="http://www.dabeaz.com/python/GIL.pdf" target="_blank" rel="noopener">http://www.dabeaz.com/python/GIL.pdf</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" data-id="cjdlpjcmz000b387cj8suiacw" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/法/">法</a></li></ul>
 
     </footer>
   </div>
@@ -306,6 +401,76 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技/">技</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-python/python--小知识点" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/24/python/python--小知识点/" class="article-date">
+  <time datetime="2016-09-24T04:39:04.000Z" itemprop="datePublished">2016-09-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/24/python/python--小知识点/">python--小知识点</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="lambda-x-i-x-for-i-in-range-4"><a href="#lambda-x-i-x-for-i-in-range-4" class="headerlink" title="[lambda x : i*x for i in range(4)]"></a>[lambda x : i*x for i in range(4)]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def mutipliers():</span><br><span class="line">    return [lambda x : i*x for i in range(4)]</span><br><span class="line">print [m(2) for m in mutipliers()]</span><br><span class="line">&gt;&gt;&gt; [6,6,6,6]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> [lambda x : i*x for i in range(4)]</span><br><span class="line">函数内部的变量是在运行时候确定</span><br></pre></td></tr></table></figure>
+<p>拆开就很清楚了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func_list = []</span><br><span class="line">for i in range(4):</span><br><span class="line">    func_list.append(lambda x:i*x)</span><br><span class="line">    # func_list.append(lambda x,i=i:i*x)</span><br></pre></td></tr></table></figure></p>
+<h2 id="生成器的独立变量作用域"><a href="#生成器的独立变量作用域" class="headerlink" title="生成器的独立变量作用域"></a>生成器的独立变量作用域</h2><p>代码中gen生成器的变量作用域是独立的，无法获取外界的变量，出现报错<br>可用lambda来获取<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class A (object):</span><br><span class="line">    x = 1</span><br><span class="line">    print x</span><br><span class="line">    gen = (x for _ in range(10))</span><br><span class="line">    # gen = (lambda x:(x for _ in xrange(10)))(x)</span><br><span class="line">    # print (lambda x: x+1)(5)</span><br><span class="line">for i in A.gen:</span><br><span class="line">    print i</span><br></pre></td></tr></table></figure></p>
+<h2 id="类属性的继承"><a href="#类属性的继承" class="headerlink" title="类属性的继承"></a>类属性的继承</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Parent(object):</span><br><span class="line">    x =1</span><br><span class="line"></span><br><span class="line">class Child1(Parent):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">class Child2(Parent):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">print Parent.x, Child1.x, Child2.x</span><br><span class="line">Child1.x = 2 #动态的创建了Child2的子类属性，覆盖父类属性</span><br><span class="line">print Parent.x, Child1.x, Child2.x</span><br><span class="line">Parent.x = 3</span><br><span class="line">print Parent.x, Child1.x, Child2.x</span><br></pre></td></tr></table></figure>
+<h2 id="列表切片-和-5"><a href="#列表切片-和-5" class="headerlink" title="列表切片 和[[]]*5"></a>列表切片 和[[]]*5</h2><ul>
+<li><p>列表切片不会越界，报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]</span><br><span class="line">print list[10:]</span><br><span class="line">[x for x in list[::2] if x%2 == 0]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>理解[[]]*5 产生$相同$的[]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">list = [[]]*5</span><br><span class="line"></span><br><span class="line"># same_list = []</span><br><span class="line"># list = []</span><br><span class="line"># for i in range(5):</span><br><span class="line">#     list.append(same_list)</span><br><span class="line"></span><br><span class="line">print list </span><br><span class="line">&gt;&gt;&gt; [[], [], [], [], []]</span><br><span class="line">list[1].append(10)</span><br><span class="line">print list </span><br><span class="line">&gt;&gt;&gt; [[10], [10], [10], [10], [10]]</span><br><span class="line">list[2].append(20)</span><br><span class="line">print list</span><br><span class="line">&gt;&gt;&gt; [[10, 20], [10, 20], [10, 20], [10, 20], [10, 20]]</span><br><span class="line">list.append(30)</span><br><span class="line">print list </span><br><span class="line">&gt;&gt;&gt; [[10, 20], [10, 20], [10, 20], [10, 20], [10, 20], 30]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="list-不同"><a href="#list-不同" class="headerlink" title="list += 不同"></a>list += 不同</h2><p>原因：+= 调用<strong>iadd</strong> 方法，后面只要是可迭代对象就好</p>
+<pre><code>+  调用 __add__方法 
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = [1,2,3,4,5]</span><br><span class="line">b = (6,7,8)</span><br><span class="line">a +=b</span><br><span class="line">print a </span><br><span class="line">a = a +b</span><br><span class="line"># 报错</span><br></pre></td></tr></table></figure>
+<h2 id="a-b-function-执行过程"><a href="#a-b-function-执行过程" class="headerlink" title="a=b=function()执行过程"></a>a=b=function()执行过程</h2><p>先说结论<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 temp = function() </span><br><span class="line">2 a = temp</span><br><span class="line">3 b = temp</span><br></pre></td></tr></table></figure></p>
+<h2 id="list-和tuple的区别"><a href="#list-和tuple的区别" class="headerlink" title="list 和tuple的区别"></a>list 和tuple的区别</h2><ul>
+<li>list 是可变对象,tuple是不可变对象</li>
+<li>list是不可哈希,tuple是可以哈希,可以作为字典的key</li>
+<li>从概念上理解,list是一个队列,tuple则更像一种简单的数据结构</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2016/09/24/python/python--小知识点/" data-id="cjdlpjcmd0005387c3qzanl4b" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2016/09/24/python/python--小知识点/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/法/">法</a></li></ul>
 
     </footer>
   </div>
@@ -394,171 +559,6 @@
 
 
   
-    <article id="post-python/python--小知识点" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/08/22/python/python--小知识点/" class="article-date">
-  <time datetime="2016-08-22T04:39:04.000Z" itemprop="datePublished">2016-08-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/22/python/python--小知识点/">python--小知识点</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        <h2 id="lambda-x-i-x-for-i-in-range-4"><a href="#lambda-x-i-x-for-i-in-range-4" class="headerlink" title="[lambda x : i*x for i in range(4)]"></a>[lambda x : i*x for i in range(4)]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def mutipliers():</span><br><span class="line">    return [lambda x : i*x for i in range(4)]</span><br><span class="line">print [m(2) for m in mutipliers()]</span><br><span class="line">&gt;&gt;&gt; [6,6,6,6]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> [lambda x : i*x for i in range(4)]</span><br><span class="line">函数内部的变量是在运行时候确定</span><br></pre></td></tr></table></figure>
-<p>拆开就很清楚了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func_list = []</span><br><span class="line">for i in range(4):</span><br><span class="line">    func_list.append(lambda x:i*x)</span><br><span class="line">    # func_list.append(lambda x,i=i:i*x)</span><br></pre></td></tr></table></figure></p>
-<h2 id="生成器的独立变量作用域"><a href="#生成器的独立变量作用域" class="headerlink" title="生成器的独立变量作用域"></a>生成器的独立变量作用域</h2><p>代码中gen生成器的变量作用域是独立的，无法获取外界的变量，出现报错<br>可用lambda来获取<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class A (object):</span><br><span class="line">    x = 1</span><br><span class="line">    print x</span><br><span class="line">    gen = (x for _ in range(10))</span><br><span class="line">    # gen = (lambda x:(x for _ in xrange(10)))(x)</span><br><span class="line">    # print (lambda x: x+1)(5)</span><br><span class="line">for i in A.gen:</span><br><span class="line">    print i</span><br></pre></td></tr></table></figure></p>
-<h2 id="类属性的继承"><a href="#类属性的继承" class="headerlink" title="类属性的继承"></a>类属性的继承</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Parent(object):</span><br><span class="line">    x =1</span><br><span class="line"></span><br><span class="line">class Child1(Parent):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">class Child2(Parent):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">print Parent.x, Child1.x, Child2.x</span><br><span class="line">Child1.x = 2 #动态的创建了Child2的子类属性，覆盖父类属性</span><br><span class="line">print Parent.x, Child1.x, Child2.x</span><br><span class="line">Parent.x = 3</span><br><span class="line">print Parent.x, Child1.x, Child2.x</span><br></pre></td></tr></table></figure>
-<h2 id="列表切片-和-5"><a href="#列表切片-和-5" class="headerlink" title="列表切片 和[[]]*5"></a>列表切片 和[[]]*5</h2><ul>
-<li><p>列表切片不会越界，报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]</span><br><span class="line">print list[10:]</span><br><span class="line">[x for x in list[::2] if x%2 == 0]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>理解[[]]*5 产生$相同$的[]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">list = [[]]*5</span><br><span class="line"></span><br><span class="line"># same_list = []</span><br><span class="line"># list = []</span><br><span class="line"># for i in range(5):</span><br><span class="line">#     list.append(same_list)</span><br><span class="line"></span><br><span class="line">print list </span><br><span class="line">&gt;&gt;&gt; [[], [], [], [], []]</span><br><span class="line">list[1].append(10)</span><br><span class="line">print list </span><br><span class="line">&gt;&gt;&gt; [[10], [10], [10], [10], [10]]</span><br><span class="line">list[2].append(20)</span><br><span class="line">print list</span><br><span class="line">&gt;&gt;&gt; [[10, 20], [10, 20], [10, 20], [10, 20], [10, 20]]</span><br><span class="line">list.append(30)</span><br><span class="line">print list </span><br><span class="line">&gt;&gt;&gt; [[10, 20], [10, 20], [10, 20], [10, 20], [10, 20], 30]</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="list-不同"><a href="#list-不同" class="headerlink" title="list += 不同"></a>list += 不同</h2><p>原因：+= 调用<strong>iadd</strong> 方法，后面只要是可迭代对象就好</p>
-<pre><code>+  调用 __add__方法 
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = [1,2,3,4,5]</span><br><span class="line">b = (6,7,8)</span><br><span class="line">a +=b</span><br><span class="line">print a </span><br><span class="line">a = a +b</span><br><span class="line"># 报错</span><br></pre></td></tr></table></figure>
-<h2 id="a-b-function-执行过程"><a href="#a-b-function-执行过程" class="headerlink" title="a=b=function()执行过程"></a>a=b=function()执行过程</h2><p>先说结论<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 temp = function() </span><br><span class="line">2 a = temp</span><br><span class="line">3 b = temp</span><br></pre></td></tr></table></figure></p>
-<h2 id="list-和tuple的区别"><a href="#list-和tuple的区别" class="headerlink" title="list 和tuple的区别"></a>list 和tuple的区别</h2><ul>
-<li>list 是可变对象,tuple是不可变对象</li>
-<li>list是不可哈希,tuple是可以哈希,可以作为字典的key</li>
-<li>从概念上理解,list是一个队列,tuple则更像一种简单的数据结构</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2016/08/22/python/python--小知识点/" data-id="cjdlpjcmd0005387c3qzanl4b" class="article-share-link">分享</a>
-      
-      
-        <a href="http://zhangjin.xyz/2016/08/22/python/python--小知识点/#disqus_thread" class="article-comment-link">留言</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/法/">法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-python/进程(process),线程(thread)，协程( coroutine)，并发，异步" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" class="article-date">
-  <time datetime="2016-08-22T04:39:04.000Z" itemprop="datePublished">2016-08-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/">进程(process),线程(thread)，协程( coroutine)，并发，异步</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        <p>[toc]<br>进程(process),线程(thread)，协程( coroutine)，并发，异步</p>
-<h2 id="1-GIL"><a href="#1-GIL" class="headerlink" title="1 GIL"></a>1 GIL</h2><p>计算密集型(cpu-bound)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countdown</span><span class="params">(n)</span>:</span></span><br><span class="line">         <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">         n -= <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>顺序执行两次</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COUNT = 100000000 </span><br><span class="line">countdown(COUNT)</span><br><span class="line">countdown(COUNT)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>多线程的执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">t1 = Thread(target=countdown,args=(COUNT,))</span><br><span class="line">t2 = Thread(target=countdown,args=(COUNT,))</span><br><span class="line">t1.start(); t2.start()</span><br><span class="line">t1.join(); t2.join()</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>结果多线程的比顺序执行的慢？？<br>python的thread是假的thread，因为Python的解释器只允许一个线程的执行。线程无法利用多核的优势。<br>每次释放GIL锁，线程进行锁竞争、切换线程，会消耗资源。并且由于GIL锁存在，<strong>python里一个进程永远只能同时执行一个线程(拿到GIL的线程才能执行)</strong>，这就是为什么在多核CPU上，python的多线程效率并不高。<br><strong>python下想要充分利用多核CPU，就用多进程</strong></p>
-<p>每个进程有各自独立的GIL，互不干扰，这样就可以真正意义上的并行执行，所以在python中，多进程的执行效率优于多线程(仅仅针对多核CPU而言)。</p>
-<p>###1.1 GIL特点</p>
-<ul>
-<li>Only one Python thread can execute in the interpreter at once<pre><code>（The interpreter has a global variable that simply points to the ThreadState structure of the currently running thread）
-</code></pre></li>
-<li>All thread scheduling is left to the host operating system</li>
-<li>GIL 保证了线程的互斥<br>###1.2 GIL行为</li>
-<li>当线程运行的时候 hold GIL</li>
-<li>当被I/O block的时候，thread release GIL(所以io的时候可以多线程)，</li>
-</ul>
-<h2 id="2-并发-concurrentcy-同步（synchronous）-IO和异步（asynchronous）-IO，阻塞（blocking）-IO和非阻塞（non-blocking）IO"><a href="#2-并发-concurrentcy-同步（synchronous）-IO和异步（asynchronous）-IO，阻塞（blocking）-IO和非阻塞（non-blocking）IO" class="headerlink" title="2 并发(concurrentcy), 同步（synchronous） IO和异步（asynchronous） IO，阻塞（blocking） IO和非阻塞（non-blocking）IO"></a>2 并发(concurrentcy), 同步（synchronous） IO和异步（asynchronous） IO，阻塞（blocking） IO和非阻塞（non-blocking）IO</h2><ul>
-<li>阻塞/非阻塞 它们是程序在等待消息的状态。</li>
-<li>同步/异步 是程序获得关注消息的通知机制<br>组合</li>
-<li>同步阻塞 :效率最低（日志程序）</li>
-<li>同步非阻塞：效率不高（需要轮询）</li>
-<li>异步阻塞：？一般模式线程回调</li>
-<li>异步回调：？iocp<h3 id="2-1-并发-concurrentcy"><a href="#2-1-并发-concurrentcy" class="headerlink" title="2.1 并发(concurrentcy)"></a>2.1 并发(concurrentcy)</h3></li>
-<li>csapp中的定义<br>logical control flows are concurrent if they overlap in time<h2 id="3-进程-process"><a href="#3-进程-process" class="headerlink" title="3  进程(process)"></a>3  进程(process)</h2>定义：进程是正在运行程序的实例，如chrome<br>进程的三种状态：</li>
-<li>就绪态</li>
-<li>执行态</li>
-<li>阻塞态</li>
-</ul>
-<p>进程是基于计算机系统的异常。进程切换是需要保存上下文环境(一些寄存器，以及栈的信息。<br>子进程和父进程具有相同的文件描述符。<br>不同的进程具有不同的地址空间，变量无法共享。调度有操作系统完成。</p>
-<h2 id="4-线程-thread"><a href="#4-线程-thread" class="headerlink" title="4 线程(thread)"></a>4 线程(thread)</h2><p>一个进程，包含多个线程<br>线程是一种轻量进程，实际上在linux内核中，两者几乎没有差别，除了一点——线程并不产生新的地址空间和资源描述符表，而是复用父进程的。线程的调度和进程一样，都必须陷入内核态。调度有操作系统完成。<br>线程模型主要通过陷入切换上下文</p>
-<h2 id="5-协程-coroutine"><a href="#5-协程-coroutine" class="headerlink" title="5 协程(coroutine)"></a>5 协程(coroutine)</h2><p>一个线程，包含多协程。协程不需要陷入内核。<br><strong>函数</strong>，所有语言中都是层级调用，比如A调用B，B在执行过程中又调用了C，C执行完毕返回，B执行完毕返回，最后是A执行完毕。</p>
-<p><strong>函数的调用</strong> 是通过栈来实现的，一个线程就是执行一个子函数<br>栈帧保存了给出代码的的信息和上下文，其中包含最后执行的指令，全局和局部命名空间，异常状态等信息。<code>f_valueblock</code>保存了数据，<code>b_blockstack</code>保存了异常和循环控制方法<sup>[2]</sup>。<br>python 的 generator 只保留栈帧上下文，不保留调用栈，而且 generator 函数不允许 return；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></span><br><span class="line">    x = <span class="number">1</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">(y)</span>:</span></span><br><span class="line">        z = y + <span class="number">2</span>  <span class="comment"># &lt;--- (3) ... and the interpreter is here.</span></span><br><span class="line">        <span class="keyword">return</span> z</span><br><span class="line">    <span class="keyword">return</span> bar(x)  <span class="comment"># &lt;--- (2) ... which is returning a call to bar ...</span></span><br><span class="line">foo()              <span class="comment"># &lt;--- (1) We're in the middle of a call to foo ...</span></span><br></pre></td></tr></table></figure></p>
-<p>那么，相应的调用栈如下，一个py文件，一个类，一个函数都是一个代码块，对应者一个Frame，保存着上下文环境以及字节码指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">c   ---------------------------</span><br><span class="line">a  | bar Frame                 | -&gt; block stack: []</span><br><span class="line">l  |     (newest)              | -&gt; data stack: [1, 2]</span><br><span class="line">l   ---------------------------</span><br><span class="line">   | foo Frame                 | -&gt; block stack: []</span><br><span class="line">s  |                           | -&gt; data stack: [&lt;Function foo.&lt;locals&gt;.bar at 0x10d389680&gt;, 1]</span><br><span class="line">t   ---------------------------</span><br><span class="line">a  | main (module) Frame       | -&gt; block stack: []</span><br><span class="line">c  |       (oldest)            | -&gt; data stack: [&lt;Function foo at 0x10d3540e0&gt;]</span><br><span class="line">k   ---------------------------</span><br></pre></td></tr></table></figure></p>
-<p>携程看起来像函数，但是内部可以中断。举例如<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">A</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'1'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'2'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">B</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'x'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'y'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'z'</span></span><br><span class="line">``` </span><br><span class="line">假设程序是由携程执行的，，在执行A的过程中，可以随时中断，去执行B，B也可能在执行过程中中断再去执行A，结果可能是：</span><br></pre></td></tr></table></figure></p>
-<p>1<br>2<br>x<br>y<br>3<br>z<br>```</p>
-<h3 id="5-1-优点"><a href="#5-1-优点" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
-<li>协程极高的执行效率</li>
-<li>不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多。</li>
-</ul>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><blockquote>
-<p>[1] python cookbook作者的分析 <a href="http://www.dabeaz.com/finalgenerator/" target="_blank" rel="noopener">http://www.dabeaz.com/finalgenerator/</a><br>[2] 生成器的源码分析 <a href="http://www.cnblogs.com/coder2012/p/4990834.html" target="_blank" rel="noopener">http://www.cnblogs.com/coder2012/p/4990834.html</a><br>[3 ]<a href="http://www.jianshu.com/p/02b7a279c588" target="_blank" rel="noopener">http://www.jianshu.com/p/02b7a279c588</a><br>[4]python的GIL <a href="http://www.dabeaz.com/python/GIL.pdf" target="_blank" rel="noopener">http://www.dabeaz.com/python/GIL.pdf</a></p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" data-id="cjdlpjcmz000b387cj8suiacw" class="article-share-link">分享</a>
-      
-      
-        <a href="http://zhangjin.xyz/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/#disqus_thread" class="article-comment-link">留言</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/法/">法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
 
 </section>
            
@@ -580,7 +580,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tagcloud">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/note/" style="font-size: 14px; color: #00f">note</a> <a href="/tags/技/" style="font-size: 14px; color: #00f">技</a> <a href="/tags/法/" style="font-size: 25px; color: #ee82ee">法</a> <a href="/tags/经验/" style="font-size: 14px; color: #00f">经验</a> <a href="/tags/配置/" style="font-size: 14px; color: #00f">配置</a>
+      <a href="/tags/技/" style="font-size: 14px; color: #00f">技</a> <a href="/tags/法/" style="font-size: 14px; color: #00f">法</a> <a href="/tags/配置/" style="font-size: 14px; color: #00f">配置</a>
     </div>
   </div>
 
@@ -592,11 +592,15 @@
       <ul>
         
           <li>
-            <a href="/2018/01/24/python/生产环境持续集成/">部署持续集成</a>
+            <a href="/2018/01/24/python/生产环境持续集成/">django 部署 持续集成</a>
           </li>
         
           <li>
-            <a href="/2018/01/24/python/获取文字显示宽度/">获取文字显示宽度</a>
+            <a href="/2017/08/24/python/获取文字显示宽度/">python 获取文字显示宽度</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/">进程(process),线程(thread)，协程( coroutine)，并发，异步</a>
           </li>
         
           <li>
@@ -604,11 +608,7 @@
           </li>
         
           <li>
-            <a href="/2016/08/22/java/kafka debezium配置/">python--小知识点</a>
-          </li>
-        
-          <li>
-            <a href="/2016/08/22/python/python--小知识点/">python--小知识点</a>
+            <a href="/2016/09/24/python/python--小知识点/">python--小知识点</a>
           </li>
         
       </ul>
