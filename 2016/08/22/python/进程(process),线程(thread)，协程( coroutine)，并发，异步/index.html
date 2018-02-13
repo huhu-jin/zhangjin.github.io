@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>进程(process),线程(thread)，协程( coroutine)，并发，异步 | jin |  blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="[toc]进程(process),线程(thread)，协程( coroutine)，并发，异步 1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次 123COUNT = 100000000 countdown(COUNT)countdown(COUNT)  多线程的执行">
+<meta name="keywords" content="法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程(process),线程(thread)，协程( coroutine)，并发，异步">
+<meta property="og:url" content="http://zhangjin.xyz/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/index.html">
+<meta property="og:site_name" content="jin |  blog">
+<meta property="og:description" content="[toc]进程(process),线程(thread)，协程( coroutine)，并发，异步 1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次 123COUNT = 100000000 countdown(COUNT)countdown(COUNT)  多线程的执行">
+<meta property="og:updated_time" content="2018-02-13T13:47:40.231Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进程(process),线程(thread)，协程( coroutine)，并发，异步">
+<meta name="twitter:description" content="[toc]进程(process),线程(thread)，协程( coroutine)，并发，异步 1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次 123COUNT = 100000000 countdown(COUNT)countdown(COUNT)  多线程的执行">
+  
+    <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhangjin.xyz"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">jin |  blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python/进程(process),线程(thread)，协程( coroutine)，并发，异步" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" class="article-date">
+  <time datetime="2016-08-22T04:39:04.000Z" itemprop="datePublished">2016-08-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      进程(process),线程(thread)，协程( coroutine)，并发，异步
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>[toc]<br>进程(process),线程(thread)，协程( coroutine)，并发，异步</p>
+<h2 id="1-GIL"><a href="#1-GIL" class="headerlink" title="1 GIL"></a>1 GIL</h2><p>计算密集型(cpu-bound)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countdown</span><span class="params">(n)</span>:</span></span><br><span class="line">         <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">         n -= <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>顺序执行两次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COUNT = 100000000 </span><br><span class="line">countdown(COUNT)</span><br><span class="line">countdown(COUNT)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多线程的执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">t1 = Thread(target=countdown,args=(COUNT,))</span><br><span class="line">t2 = Thread(target=countdown,args=(COUNT,))</span><br><span class="line">t1.start(); t2.start()</span><br><span class="line">t1.join(); t2.join()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>结果多线程的比顺序执行的慢？？<br>python的thread是假的thread，因为Python的解释器只允许一个线程的执行。线程无法利用多核的优势。<br>每次释放GIL锁，线程进行锁竞争、切换线程，会消耗资源。并且由于GIL锁存在，<strong>python里一个进程永远只能同时执行一个线程(拿到GIL的线程才能执行)</strong>，这就是为什么在多核CPU上，python的多线程效率并不高。<br><strong>python下想要充分利用多核CPU，就用多进程</strong></p>
+<p>每个进程有各自独立的GIL，互不干扰，这样就可以真正意义上的并行执行，所以在python中，多进程的执行效率优于多线程(仅仅针对多核CPU而言)。</p>
+<p>###1.1 GIL特点</p>
+<ul>
+<li>Only one Python thread can execute in the interpreter at once<pre><code>（The interpreter has a global variable that simply points to the ThreadState structure of the currently running thread）
+</code></pre></li>
+<li>All thread scheduling is left to the host operating system</li>
+<li>GIL 保证了线程的互斥<br>###1.2 GIL行为</li>
+<li>当线程运行的时候 hold GIL</li>
+<li>当被I/O block的时候，thread release GIL(所以io的时候可以多线程)，</li>
+</ul>
+<h2 id="2-并发-concurrentcy-同步（synchronous）-IO和异步（asynchronous）-IO，阻塞（blocking）-IO和非阻塞（non-blocking）IO"><a href="#2-并发-concurrentcy-同步（synchronous）-IO和异步（asynchronous）-IO，阻塞（blocking）-IO和非阻塞（non-blocking）IO" class="headerlink" title="2 并发(concurrentcy), 同步（synchronous） IO和异步（asynchronous） IO，阻塞（blocking） IO和非阻塞（non-blocking）IO"></a>2 并发(concurrentcy), 同步（synchronous） IO和异步（asynchronous） IO，阻塞（blocking） IO和非阻塞（non-blocking）IO</h2><ul>
+<li>阻塞/非阻塞 它们是程序在等待消息的状态。</li>
+<li>同步/异步 是程序获得关注消息的通知机制<br>组合</li>
+<li>同步阻塞 :效率最低（日志程序）</li>
+<li>同步非阻塞：效率不高（需要轮询）</li>
+<li>异步阻塞：？一般模式线程回调</li>
+<li>异步回调：？iocp<h3 id="2-1-并发-concurrentcy"><a href="#2-1-并发-concurrentcy" class="headerlink" title="2.1 并发(concurrentcy)"></a>2.1 并发(concurrentcy)</h3></li>
+<li>csapp中的定义<br>logical control flows are concurrent if they overlap in time<h2 id="3-进程-process"><a href="#3-进程-process" class="headerlink" title="3  进程(process)"></a>3  进程(process)</h2>定义：进程是正在运行程序的实例，如chrome<br>进程的三种状态：</li>
+<li>就绪态</li>
+<li>执行态</li>
+<li>阻塞态</li>
+</ul>
+<p>进程是基于计算机系统的异常。进程切换是需要保存上下文环境(一些寄存器，以及栈的信息。<br>子进程和父进程具有相同的文件描述符。<br>不同的进程具有不同的地址空间，变量无法共享。调度有操作系统完成。</p>
+<h2 id="4-线程-thread"><a href="#4-线程-thread" class="headerlink" title="4 线程(thread)"></a>4 线程(thread)</h2><p>一个进程，包含多个线程<br>线程是一种轻量进程，实际上在linux内核中，两者几乎没有差别，除了一点——线程并不产生新的地址空间和资源描述符表，而是复用父进程的。线程的调度和进程一样，都必须陷入内核态。调度有操作系统完成。<br>线程模型主要通过陷入切换上下文</p>
+<h2 id="5-协程-coroutine"><a href="#5-协程-coroutine" class="headerlink" title="5 协程(coroutine)"></a>5 协程(coroutine)</h2><p>一个线程，包含多协程。协程不需要陷入内核。<br><strong>函数</strong>，所有语言中都是层级调用，比如A调用B，B在执行过程中又调用了C，C执行完毕返回，B执行完毕返回，最后是A执行完毕。</p>
+<p><strong>函数的调用</strong> 是通过栈来实现的，一个线程就是执行一个子函数<br>栈帧保存了给出代码的的信息和上下文，其中包含最后执行的指令，全局和局部命名空间，异常状态等信息。<code>f_valueblock</code>保存了数据，<code>b_blockstack</code>保存了异常和循环控制方法<sup>[2]</sup>。<br>python 的 generator 只保留栈帧上下文，不保留调用栈，而且 generator 函数不允许 return；<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></span><br><span class="line">    x = <span class="number">1</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">(y)</span>:</span></span><br><span class="line">        z = y + <span class="number">2</span>  <span class="comment"># &lt;--- (3) ... and the interpreter is here.</span></span><br><span class="line">        <span class="keyword">return</span> z</span><br><span class="line">    <span class="keyword">return</span> bar(x)  <span class="comment"># &lt;--- (2) ... which is returning a call to bar ...</span></span><br><span class="line">foo()              <span class="comment"># &lt;--- (1) We're in the middle of a call to foo ...</span></span><br></pre></td></tr></table></figure></p>
+<p>那么，相应的调用栈如下，一个py文件，一个类，一个函数都是一个代码块，对应者一个Frame，保存着上下文环境以及字节码指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">c   ---------------------------</span><br><span class="line">a  | bar Frame                 | -&gt; block stack: []</span><br><span class="line">l  |     (newest)              | -&gt; data stack: [1, 2]</span><br><span class="line">l   ---------------------------</span><br><span class="line">   | foo Frame                 | -&gt; block stack: []</span><br><span class="line">s  |                           | -&gt; data stack: [&lt;Function foo.&lt;locals&gt;.bar at 0x10d389680&gt;, 1]</span><br><span class="line">t   ---------------------------</span><br><span class="line">a  | main (module) Frame       | -&gt; block stack: []</span><br><span class="line">c  |       (oldest)            | -&gt; data stack: [&lt;Function foo at 0x10d3540e0&gt;]</span><br><span class="line">k   ---------------------------</span><br></pre></td></tr></table></figure></p>
+<p>携程看起来像函数，但是内部可以中断。举例如<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">A</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'1'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'2'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">B</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'x'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'y'</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'z'</span></span><br><span class="line">``` </span><br><span class="line">假设程序是由携程执行的，，在执行A的过程中，可以随时中断，去执行B，B也可能在执行过程中中断再去执行A，结果可能是：</span><br></pre></td></tr></table></figure></p>
+<p>1<br>2<br>x<br>y<br>3<br>z<br>```</p>
+<h3 id="5-1-优点"><a href="#5-1-优点" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li>协程极高的执行效率</li>
+<li>不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多。</li>
+</ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><blockquote>
+<p>[1] python cookbook作者的分析 <a href="http://www.dabeaz.com/finalgenerator/" target="_blank" rel="noopener">http://www.dabeaz.com/finalgenerator/</a><br>[2] 生成器的源码分析 <a href="http://www.cnblogs.com/coder2012/p/4990834.html" target="_blank" rel="noopener">http://www.cnblogs.com/coder2012/p/4990834.html</a><br>[3 ]<a href="http://www.jianshu.com/p/02b7a279c588" target="_blank" rel="noopener">http://www.jianshu.com/p/02b7a279c588</a><br>[4]python的GIL <a href="http://www.dabeaz.com/python/GIL.pdf" target="_blank" rel="noopener">http://www.dabeaz.com/python/GIL.pdf</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" data-id="cjdlpjcmz000b387cj8suiacw" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/法/">法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =3
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/22/python/python--小知识点/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          python--小知识点
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+    <section id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+      </section>
+      
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-GIL"><span class="toc-number">1.</span> <span class="toc-text">1 GIL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-并发-concurrentcy-同步（synchronous）-IO和异步（asynchronous）-IO，阻塞（blocking）-IO和非阻塞（non-blocking）IO"><span class="toc-number">2.</span> <span class="toc-text">2 并发(concurrentcy), 同步（synchronous） IO和异步（asynchronous） IO，阻塞（blocking） IO和非阻塞（non-blocking）IO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-并发-concurrentcy"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 并发(concurrentcy)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-进程-process"><span class="toc-number">3.</span> <span class="toc-text">3  进程(process)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-线程-thread"><span class="toc-number">4.</span> <span class="toc-text">4 线程(thread)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-协程-coroutine"><span class="toc-number">5.</span> <span class="toc-text">5 协程(coroutine)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-优点"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 优点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">6.</span> <span class="toc-text">参考文献</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Zhang Jin&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;jinzhang@hotline@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+<script>
+  var disqus_shortname = 'huhu-jin';
+  
+  var disqus_url = 'http://zhangjin.xyz/2016/08/22/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>

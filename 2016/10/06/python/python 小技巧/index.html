@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python 小技巧 | jin |  blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="列表拼接data 是个列表或者元组，将里面内容拼接成字符串显示12s = &amp;quot;a-b-c-d-e-f&amp;quot;new_s  = &amp;quot;&amp;quot;.join(s.split(&amp;quot;-&amp;quot;)) 不同实例添加不同的属性1234567891011kwargs = dict(zip([chr(i) for i in range(97, 102)], range(1, 5)))">
+<meta name="keywords" content="技">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 小技巧">
+<meta property="og:url" content="http://zhangjin.xyz/2016/10/06/python/python 小技巧/index.html">
+<meta property="og:site_name" content="jin |  blog">
+<meta property="og:description" content="列表拼接data 是个列表或者元组，将里面内容拼接成字符串显示12s = &amp;quot;a-b-c-d-e-f&amp;quot;new_s  = &amp;quot;&amp;quot;.join(s.split(&amp;quot;-&amp;quot;)) 不同实例添加不同的属性1234567891011kwargs = dict(zip([chr(i) for i in range(97, 102)], range(1, 5)))">
+<meta property="og:updated_time" content="2018-02-13T13:48:22.171Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 小技巧">
+<meta name="twitter:description" content="列表拼接data 是个列表或者元组，将里面内容拼接成字符串显示12s = &amp;quot;a-b-c-d-e-f&amp;quot;new_s  = &amp;quot;&amp;quot;.join(s.split(&amp;quot;-&amp;quot;)) 不同实例添加不同的属性1234567891011kwargs = dict(zip([chr(i) for i in range(97, 102)], range(1, 5)))">
+  
+    <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhangjin.xyz"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">jin |  blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python/python 小技巧" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/06/python/python 小技巧/" class="article-date">
+  <time datetime="2016-10-06T04:39:04.000Z" itemprop="datePublished">2016-10-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python 小技巧
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="列表拼接"><a href="#列表拼接" class="headerlink" title="列表拼接"></a>列表拼接</h2><p>data 是个列表或者元组，将里面内容拼接成字符串显示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = &quot;a-b-c-d-e-f&quot;</span><br><span class="line">new_s  = &quot;&quot;.join(s.split(&quot;-&quot;))</span><br></pre></td></tr></table></figure></p>
+<h2 id="不同实例添加不同的属性"><a href="#不同实例添加不同的属性" class="headerlink" title="不同实例添加不同的属性"></a>不同实例添加不同的属性</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kwargs = dict(zip([chr(i) for i in range(97, 102)], range(1, 5)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Book(object):</span><br><span class="line">    def __init__(self, name, authors, price, **kwargs):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.authors = authors</span><br><span class="line">        self.price = price</span><br><span class="line">        self.__dict__.update(kwargs)  # 更新属性</span><br><span class="line"></span><br><span class="line">b = Book(&quot;pythoncookbook&quot;, &apos;smone&apos;, 100, **kwargs)  # 反解包</span><br></pre></td></tr></table></figure>
+<h2 id="默认参数的隐藏写法"><a href="#默认参数的隐藏写法" class="headerlink" title="默认参数的隐藏写法"></a>默认参数的隐藏写法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def create_engine(user, passwd, db, host=&apos;127.0.0.1&apos;, port=3306, **kw):</span><br><span class="line">    params = dict(user=user, passwd=passwd, db=db, host=host, port=port)</span><br><span class="line">    defaults = dict(use_unicode=True, charset=&apos;utf8&apos;, collation=&apos;utf8_general_ci&apos;, autocommit=False)</span><br><span class="line">    for k, v in defaults.iteritems():</span><br><span class="line">        params[k] = kw.pop(k, v)　＃ｋｗ有值则用ｋｗ，没有就用　ｄｅｆａｕｌｔ的</span><br></pre></td></tr></table></figure>
+<h2 id="快速读写文件-gnenrator"><a href="#快速读写文件-gnenrator" class="headerlink" title="快速读写文件(gnenrator)"></a>快速读写文件(gnenrator)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wwwlog = open(&quot;access-log&quot;)</span><br><span class="line">bytecolumn = (line.rsplit(None,1)[1] for line in wwwlog)  ## 逐行读入</span><br><span class="line">bytes = (int(x) for x in bytecolumn if x != &apos;-&apos;) # 处理</span><br><span class="line">print &quot;Total&quot;, sum(bytes)</span><br></pre></td></tr></table></figure>
+<h2 id="iostream的打开"><a href="#iostream的打开" class="headerlink" title="iostream的打开"></a>iostream的打开</h2><p>打开一个url文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from io import StringIO</span><br><span class="line">StringIO(unicode(my_file.read(), &quot;utf-8&quot;))</span><br><span class="line"></span><br><span class="line">import io</span><br><span class="line">from PIL import Image</span><br><span class="line">response = urllib2.urlopen(&apos;http://images2015.cnblogs.com/blog/425762/201511/425762-20151120204617843-2002471507.png&apos;)</span><br><span class="line">val = response.read()</span><br><span class="line">i = Image.open(io.BytesIO(val))</span><br><span class="line">i.save(&apos;test.png&apos;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="for-循环添加命令"><a href="#for-循环添加命令" class="headerlink" title="for 循环添加命令"></a>for 循环添加命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">commands = []</span><br><span class="line">for cmd in &quot;create&quot;, &quot;rename&quot;, &quot;delete&quot;, &quot;search&quot;, &quot;copy&quot;, &quot;unknown&quot;:</span><br><span class="line">   commands.append(cmd)</span><br></pre></td></tr></table></figure>
+<h2 id="神奇的列表切片"><a href="#神奇的列表切片" class="headerlink" title="神奇的列表切片"></a>神奇的列表切片</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;FizzBuzz&apos;[100:-5:-1]</span><br><span class="line">&gt;&gt;&gt;zzuB</span><br></pre></td></tr></table></figure>
+<h2 id="or-and-not-妙用"><a href="#or-and-not-妙用" class="headerlink" title="or and  not 妙用"></a>or and  not 妙用</h2><p>a or b 中只有a不为None,空,才会去求b的值<br>a and b 两者皆为True 或有值 ,取后者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def fun_print(x):</span><br><span class="line">    print x</span><br><span class="line">    return 15165</span><br><span class="line"></span><br><span class="line">print 0 or fun_print(123)</span><br><span class="line">print not 1</span><br><span class="line">&gt;&gt;&gt;False</span><br></pre></td></tr></table></figure></p>
+<h2 id="Counter计数器"><a href="#Counter计数器" class="headerlink" title="Counter计数器"></a>Counter计数器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print Counter([1,3,3,3,4,5]) | Counter([3,3,4,5,6]) # 按计算多的算</span><br><span class="line">list(c.elements())</span><br></pre></td></tr></table></figure>
+<p>##带属性的字典<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Dict(dict):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    字典对象</span><br><span class="line">    实现一个简单的可以通过属性访问的字典，比如 x.key = value</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __getattr__(self, key):</span><br><span class="line">        try:</span><br><span class="line">            return self[key]</span><br><span class="line">        except KeyError:</span><br><span class="line">            raise AttributeError(r&quot;&apos;Dict&apos; object has no attribute &apos;%s&apos;&quot; % key)</span><br><span class="line"></span><br><span class="line">    def __setattr__(self, key, value):</span><br><span class="line">        self[key] = value</span><br></pre></td></tr></table></figure></p>
+<h2 id="自定义字典类型的数据结构"><a href="#自定义字典类型的数据结构" class="headerlink" title="自定义字典类型的数据结构"></a>自定义字典类型的数据结构</h2><p>不建议从dict继承 &gt;<a href="http://www.kr41.net/2016/03-23-dont_inherit_python_builtin_dict_type.html" target="_blank" rel="noopener">http://www.kr41.net/2016/03-23-dont_inherit_python_builtin_dict_type.html</a><br>form UserDict import Dictmixin<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class CaseInsensitiveDict(DictMixin):</span><br><span class="line">    def __init__(self, *args, **kwargs):</span><br><span class="line">        # super(CaseInsensitiveDict, self).__init__()</span><br><span class="line">        self.data = dict(*args, **kwargs)</span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return self.data.__repr__()</span><br><span class="line">    def __getstate__(self):</span><br><span class="line">        return self.data.copy()</span><br><span class="line">    def __setstate__(self, d):</span><br><span class="line">        self.data = d</span><br><span class="line">    def _lower_keys(self):</span><br><span class="line">        return map(str.lower, self.data.keys())</span><br><span class="line">    def __contains__(self, key):</span><br><span class="line">        return key.lower() in self._lower_keys()</span><br><span class="line">    def __getitem__(self, key):</span><br><span class="line">        if key.lower() in self:</span><br><span class="line">            return self.items()[self._lower_keys().index(key.lower())][1]</span><br><span class="line">    def __setitem__(self, key, value):</span><br><span class="line">        return self.data.__setitem__(key, value)</span><br><span class="line">    def __delitem__(self, key):</span><br><span class="line">        return self.data.__delitem__(key)</span><br><span class="line">    def __keys__(self):</span><br><span class="line">        return self.data.__keys__()</span><br><span class="line">    def __iter__(self):</span><br><span class="line">        return self.data.__iter__()</span><br><span class="line">    def iteritems(self):</span><br><span class="line">        return self.data.iteritems()</span><br></pre></td></tr></table></figure></p>
+<h2 id="代码风格"><a href="#代码风格" class="headerlink" title="代码风格"></a>代码风格</h2><blockquote>
+<p> <a href="http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/" target="_blank" rel="noopener">http://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/</a></p>
+</blockquote>
+<h2 id="延迟实例化"><a href="#延迟实例化" class="headerlink" title="延迟实例化"></a>延迟实例化</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">class LazyProxy(object):  </span><br><span class="line">    def __init__(self, cls, *params, **kwargs):  </span><br><span class="line">        self.__dict__[&quot;_cls&quot;]=cls  </span><br><span class="line">        self.__dict__[&quot;_params&quot;]=params  </span><br><span class="line">        self.__dict__[&quot;_kwargs&quot;]=kwargs  </span><br><span class="line">  </span><br><span class="line">        self.__dict__[&quot;_obj&quot;]=None  </span><br><span class="line">  </span><br><span class="line">    def __getattr__(self, name):  </span><br><span class="line">        if self.__dict__[&quot;_obj&quot;] is None:  </span><br><span class="line">            self.__init_obj()  </span><br><span class="line">  </span><br><span class="line">        return getattr(self.__dict__[&quot;_obj&quot;], name)  </span><br><span class="line">  </span><br><span class="line">    def __setattr__(self, name, value):  </span><br><span class="line">        if self.__dict__[&quot;_obj&quot;] is None:  </span><br><span class="line">            self.__init_obj()  </span><br><span class="line">  </span><br><span class="line">        setattr(self.__dict__[&quot;_obj&quot;], name, value)  </span><br><span class="line">  </span><br><span class="line">    def __init_obj(self):  </span><br><span class="line">        self.__dict__[&quot;_obj&quot;]=object.__new__(self.__dict__[&quot;_cls&quot;], *self.__dict__[&quot;_params&quot;], **self.__dict__[&quot;_kwargs&quot;])  </span><br><span class="line">        self.__dict__[&quot;_obj&quot;].__init__(*self.__dict__[&quot;_params&quot;], **self.__dict__[&quot;_kwargs&quot;])  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">class LazyInit(object):  </span><br><span class="line">    def __new__(cls, *params, **kwargs):  </span><br><span class="line">        return LazyProxy(cls, *params, **kwargs)  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">class A(LazyInit): # classes meant to be lazy loaded are derived from LazyInit  </span><br><span class="line">    def __init__(self, x):  </span><br><span class="line">        print(&quot;Init A&quot;)  </span><br><span class="line">        self.x=14+x</span><br></pre></td></tr></table></figure>
+<h2 id="缓存实例"><a href="#缓存实例" class="headerlink" title="缓存实例"></a>缓存实例</h2><p>和django的cached_property不同，可以分别赋值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">class cached_property(object):</span><br><span class="line">    &quot;&quot;&quot;Property descriptor that caches the return value</span><br><span class="line">    of the get function.</span><br><span class="line"></span><br><span class="line">    *Examples*</span><br><span class="line"></span><br><span class="line">    .. code-block:: python</span><br><span class="line"></span><br><span class="line">        @cached_property</span><br><span class="line">        def connection(self):</span><br><span class="line">            return Connection()</span><br><span class="line"></span><br><span class="line">        @connection.setter  # Prepares stored value</span><br><span class="line">        def connection(self, value):</span><br><span class="line">            if value is None:</span><br><span class="line">                raise TypeError(&apos;Connection must be a connection&apos;)</span><br><span class="line">            return value</span><br><span class="line"></span><br><span class="line">        @connection.deleter</span><br><span class="line">        def connection(self, value):</span><br><span class="line">            # Additional action to do at del(self.attr)</span><br><span class="line">            if value is not None:</span><br><span class="line">                print(&apos;Connection &#123;0!r&#125; deleted&apos;.format(value)</span><br><span class="line"></span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, fget=None, fset=None, fdel=None, doc=None):</span><br><span class="line">        self.__get = fget</span><br><span class="line">        self.__set = fset</span><br><span class="line">        self.__del = fdel</span><br><span class="line">        self.__doc__ = doc or fget.__doc__</span><br><span class="line">        self.__name__ = fget.__name__</span><br><span class="line">        self.__module__ = fget.__module__</span><br><span class="line"></span><br><span class="line">    def __get__(self, obj, type=None):</span><br><span class="line">        if obj is None:</span><br><span class="line">            return self</span><br><span class="line">        try:</span><br><span class="line">            return obj.__dict__[self.__name__]</span><br><span class="line">        except KeyError:</span><br><span class="line">            value = obj.__dict__[self.__name__] = self.__get(obj)</span><br><span class="line">            return value</span><br><span class="line"></span><br><span class="line">    def __set__(self, obj, value):</span><br><span class="line">        if obj is None:</span><br><span class="line">            return self</span><br><span class="line">        if self.__set is not None:</span><br><span class="line">            value = self.__set(obj, value)</span><br><span class="line">        obj.__dict__[self.__name__] = value</span><br><span class="line"></span><br><span class="line">    def __delete__(self, obj):</span><br><span class="line">        if obj is None:</span><br><span class="line">            return self</span><br><span class="line">        try:</span><br><span class="line">            value = obj.__dict__.pop(self.__name__)</span><br><span class="line">        except KeyError:</span><br><span class="line">            pass</span><br><span class="line">        else:</span><br><span class="line">            if self.__del is not None:</span><br><span class="line">                self.__del(obj, value)</span><br><span class="line"></span><br><span class="line">    def setter(self, fset):</span><br><span class="line">        return self.__class__(self.__get, fset, self.__del)</span><br><span class="line"></span><br><span class="line">    def deleter(self, fdel):</span><br><span class="line">        return self.__class__(self.__get, self.__set, fdel)</span><br></pre></td></tr></table></figure></p>
+<h2 id="dict-kwargs-other"><a href="#dict-kwargs-other" class="headerlink" title="dict(kwargs, **other)"></a>dict(kwargs, **other)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">b = &#123;<span class="string">"b"</span>: <span class="number">3</span>&#125;</span><br><span class="line">a = &#123;<span class="string">"a"</span>: <span class="number">1</span>&#125;</span><br><span class="line">c = dict(a, **b)</span><br><span class="line"><span class="keyword">print</span> c</span><br></pre></td></tr></table></figure>
+<h2 id="命名元组"><a href="#命名元组" class="headerlink" title="命名元组"></a>命名元组</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Human = nametuple(<span class="string">"Human"</span>,<span class="string">"name,age"</span>)</span><br><span class="line">h = Human(name=<span class="string">"zhangjin"</span>,age=<span class="number">120</span>)</span><br><span class="line">h.name</span><br><span class="line">h.age</span><br></pre></td></tr></table></figure>
+<ul>
+<li>解包 a, b, c = Human()<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span><span class="params">(object)</span>:</span></span><br><span class="line">    name = <span class="string">"xiaoming"</span></span><br><span class="line">    age = <span class="number">100</span></span><br><span class="line">    gender = <span class="string">"male"</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, index)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (self.name, self.age, self.gender)[index]</span><br><span class="line">a, b, c = Human()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2016/10/06/python/python 小技巧/" data-id="cjdlpjcm30002387cqrqi4cen" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2016/10/06/python/python 小技巧/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技/">技</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =3
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/24/python/获取文字显示宽度/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          获取文字显示宽度
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/22/java/kafka debezium配置/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">python--小知识点</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+    <section id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+      </section>
+      
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#列表拼接"><span class="toc-number">1.</span> <span class="toc-text">列表拼接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不同实例添加不同的属性"><span class="toc-number">2.</span> <span class="toc-text">不同实例添加不同的属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#默认参数的隐藏写法"><span class="toc-number">3.</span> <span class="toc-text">默认参数的隐藏写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速读写文件-gnenrator"><span class="toc-number">4.</span> <span class="toc-text">快速读写文件(gnenrator)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iostream的打开"><span class="toc-number">5.</span> <span class="toc-text">iostream的打开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#for-循环添加命令"><span class="toc-number">6.</span> <span class="toc-text">for 循环添加命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#神奇的列表切片"><span class="toc-number">7.</span> <span class="toc-text">神奇的列表切片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#or-and-not-妙用"><span class="toc-number">8.</span> <span class="toc-text">or and  not 妙用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Counter计数器"><span class="toc-number">9.</span> <span class="toc-text">Counter计数器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义字典类型的数据结构"><span class="toc-number">10.</span> <span class="toc-text">自定义字典类型的数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码风格"><span class="toc-number">11.</span> <span class="toc-text">代码风格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延迟实例化"><span class="toc-number">12.</span> <span class="toc-text">延迟实例化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存实例"><span class="toc-number">13.</span> <span class="toc-text">缓存实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dict-kwargs-other"><span class="toc-number">14.</span> <span class="toc-text">dict(kwargs, **other)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命名元组"><span class="toc-number">15.</span> <span class="toc-text">命名元组</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Zhang Jin&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;jinzhang@hotline@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+<script>
+  var disqus_shortname = 'huhu-jin';
+  
+  var disqus_url = 'http://zhangjin.xyz/2016/10/06/python/python 小技巧/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>
