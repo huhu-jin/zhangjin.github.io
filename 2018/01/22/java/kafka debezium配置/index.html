@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://zhangjin.xyz/2018/01/22/java/kafka debezium配置/index.html">
 <meta property="og:site_name" content="jin |  blog">
 <meta property="og:description" content="# debezium 配置 mysql配置12345[mysqld]server-id=1log_bin=mysql-binbinlog_format=rowbinlog_row_image=full 创建一个用户 1234CREATE USER &amp;apos;debezium&amp;apos;@&amp;apos;%&amp;apos; IDENTIFIED BY &amp;apos;Ku1LsgVs5XLN&amp;apos;;G">
-<meta property="og:updated_time" content="2018-02-13T14:06:36.409Z">
+<meta property="og:updated_time" content="2018-02-13T14:34:08.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kafka debezium配置">
 <meta name="twitter:description" content="# debezium 配置 mysql配置12345[mysqld]server-id=1log_bin=mysql-binbinlog_format=rowbinlog_row_image=full 创建一个用户 1234CREATE USER &amp;apos;debezium&amp;apos;@&amp;apos;%&amp;apos; IDENTIFIED BY &amp;apos;Ku1LsgVs5XLN&amp;apos;;G">
@@ -104,6 +104,7 @@
 <li>下载 conflution官网下载社区版 tar.gz<br><a href="https://www.confluent.io/download/" target="_blank" rel="noopener">https://www.confluent.io/download/</a></li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./bin/confluent start  schema-registry</span><br><span class="line">-----------------------------------------</span><br><span class="line">$ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties</span><br><span class="line">$ ./bin/kafka-server-start ./etc/kafka/server.properties</span><br><span class="line">$ ./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <ul>
 <li>下载第三方 connector<br><a href="http://debezium.io/docs/install/" target="_blank" rel="noopener">http://debezium.io/docs/install/</a><br>解压，放入在share/java文件中</li>
 </ul>
