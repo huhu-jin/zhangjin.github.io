@@ -5,17 +5,17 @@
   
   <title>进程(process),线程(thread)，协程( coroutine)，并发，异步 | jin |  blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="[toc]进程(process),线程(thread)，协程( coroutine)，并发，异步 1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次123COUNT = 100000000 countdown(COUNT)countdown(COUNT)">
+  <meta name="description" content="1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次123COUNT = 100000000 countdown(COUNT)countdown(COUNT)">
 <meta name="keywords" content="法,基础知识">
 <meta property="og:type" content="article">
 <meta property="og:title" content="进程(process),线程(thread)，协程( coroutine)，并发，异步">
 <meta property="og:url" content="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/index.html">
 <meta property="og:site_name" content="jin |  blog">
-<meta property="og:description" content="[toc]进程(process),线程(thread)，协程( coroutine)，并发，异步 1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次123COUNT = 100000000 countdown(COUNT)countdown(COUNT)">
-<meta property="og:updated_time" content="2018-02-13T14:36:34.890Z">
+<meta property="og:description" content="1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次123COUNT = 100000000 countdown(COUNT)countdown(COUNT)">
+<meta property="og:updated_time" content="2018-02-13T14:40:00.171Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进程(process),线程(thread)，协程( coroutine)，并发，异步">
-<meta name="twitter:description" content="[toc]进程(process),线程(thread)，协程( coroutine)，并发，异步 1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次123COUNT = 100000000 countdown(COUNT)countdown(COUNT)">
+<meta name="twitter:description" content="1 GIL计算密集型(cpu-bound)123def countdown(n):         while n &amp;gt; 0:         n -= 1  顺序执行两次123COUNT = 100000000 countdown(COUNT)countdown(COUNT)">
   
     <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
   
@@ -96,8 +96,7 @@
       
         <!-- Table of Contents -->
         
-        <p>[toc]<br>进程(process),线程(thread)，协程( coroutine)，并发，异步</p>
-<h2 id="1-GIL"><a href="#1-GIL" class="headerlink" title="1 GIL"></a>1 GIL</h2><p>计算密集型(cpu-bound)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countdown</span><span class="params">(n)</span>:</span></span><br><span class="line">         <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">         n -= <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+        <h2 id="1-GIL"><a href="#1-GIL" class="headerlink" title="1 GIL"></a>1 GIL</h2><p>计算密集型(cpu-bound)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countdown</span><span class="params">(n)</span>:</span></span><br><span class="line">         <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">         n -= <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>顺序执行两次<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COUNT = 100000000 </span><br><span class="line">countdown(COUNT)</span><br><span class="line">countdown(COUNT)</span><br></pre></td></tr></table></figure>
 </li>
