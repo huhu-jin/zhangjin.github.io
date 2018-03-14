@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>kafka 命令行 | jin |  blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zookeeper查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kafka 命令行">
+<meta property="og:url" content="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/index.html">
+<meta property="og:site_name" content="jin |  blog">
+<meta property="og:description" content="zookeeper查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者">
+<meta property="og:image" content="http://p5l4u6ggb.bkt.clouddn.com/fb4c3551-d246-4c89-87f2-485260cf1daa.png">
+<meta property="og:updated_time" content="2018-03-14T14:47:19.004Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kafka 命令行">
+<meta name="twitter:description" content="zookeeper查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者">
+<meta name="twitter:image" content="http://p5l4u6ggb.bkt.clouddn.com/fb4c3551-d246-4c89-87f2-485260cf1daa.png">
+  
+    <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhangjin.xyz"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">jin |  blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java/kafka/kafka命令行" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/14/java/kafka/kafka命令行/" class="article-date">
+  <time datetime="2018-03-13T16:00:00.000Z" itemprop="datePublished">2018-03-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/kafka/">kafka</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      kafka 命令行
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h1><h2 id="查看消费者组"><a href="#查看消费者组" class="headerlink" title="查看消费者组:"></a>查看消费者组:</h2><p>bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console-consumer-70781</span><br><span class="line">console-consumer-19936</span><br><span class="line">test</span><br></pre></td></tr></table></figure>
+<p>其中test是默认的消费者组</p>
+<p>console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者,同时会创建一个消费者组.所以命令行消费者不会竞争消费.<br><a id="more"></a></p>
+<h2 id="具体消费情况"><a href="#具体消费情况" class="headerlink" title="具体消费情况"></a>具体消费情况</h2><p>./kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –describe –group test</p>
+<p><img src="http://p5l4u6ggb.bkt.clouddn.com/fb4c3551-d246-4c89-87f2-485260cf1daa.png" align="center/"></p>
+<p>partition:分区编号</p>
+<p>current-offset:当前偏置</p>
+<p>log-end-offset:总的数据</p>
+<p>lag:落后的个数</p>
+<p>分区和偏置都是0开始</p>
+<p>去除–excute 只是打印 </p>
+<p>–to-datetime 多少时间之前</p>
+<p>–by-duration  多少时间只内</p>
+<h2 id="修改偏置"><a href="#修改偏置" class="headerlink" title="修改偏置"></a>修改偏置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server 192.168.137.51:9092 --group test --reset-offsets --to-offset 1 --topic jin --execute</span><br><span class="line"></span><br><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server 192.168.137.51:9092 --group test --reset-offsets --to-latest --topic jin --execute</span><br><span class="line"></span><br><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server 192.168.137.51:9092 --group test --reset-offsets --to-latest --all-topics --execute</span><br><span class="line"></span><br><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server 192.168.137.51:9092 --group test --reset-offsets --all-topics --to-datetime 2018-03-14T17:15:00.000 --execute</span><br><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server 192.168.137.51:9092 --group test --reset-offsets --all-topics --by-duration P1DT0H30M0S --execute</span><br></pre></td></tr></table></figure>
+<h3 id="查看topic"><a href="#查看topic" class="headerlink" title="查看topic"></a>查看topic</h3><p>./kafka-topics.sh –describe –zookeeper 47.96.160.128:2181 –topic addSetMealTemplate</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Topic:addSetMealTemplate	PartitionCount:1	ReplicationFactor:1	Configs:</span><br><span class="line"></span><br><span class="line">	Topic: addSetMealTemplate	Partition: 0	Leader: 0	Replicas: 0	Isr: 0</span><br></pre></td></tr></table></figure>
+<h2 id="kafka-eagle"><a href="#kafka-eagle" class="headerlink" title="kafka eagle"></a>kafka eagle</h2><p><a href="https://ke.smartloli.org/2.Install/2.Installing.html" target="_blank" rel="noopener">https://ke.smartloli.org/2.Install/2.Installing.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/" data-id="cjer7aqhf000zq47c4ozopo35" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =3
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/08/java/java 的执行顺序/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">java 的执行顺序</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+    <section id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+      </section>
+      
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#zookeeper"><span class="toc-number">1.</span> <span class="toc-text">zookeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看消费者组"><span class="toc-number">1.1.</span> <span class="toc-text">查看消费者组:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体消费情况"><span class="toc-number">1.2.</span> <span class="toc-text">具体消费情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改偏置"><span class="toc-number">1.3.</span> <span class="toc-text">修改偏置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看topic"><span class="toc-number">1.3.1.</span> <span class="toc-text">查看topic</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka-eagle"><span class="toc-number">1.4.</span> <span class="toc-text">kafka eagle</span></a></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Zhang Jin&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;jinzhang@hotline@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+<script>
+  var disqus_shortname = 'huhu-jin';
+  
+  var disqus_url = 'http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>
