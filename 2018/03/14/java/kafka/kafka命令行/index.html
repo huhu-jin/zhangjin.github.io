@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>kafka 命令行 | jin |  blog</title>
+  <title>kafka 常用命令行 | jin |  blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="zookeeper查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者">
+  <meta name="description" content="查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者,同时会创建一个消">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kafka 命令行">
+<meta property="og:title" content="kafka 常用命令行">
 <meta property="og:url" content="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/index.html">
 <meta property="og:site_name" content="jin |  blog">
-<meta property="og:description" content="zookeeper查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者">
+<meta property="og:description" content="查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者,同时会创建一个消">
 <meta property="og:image" content="http://p5l4u6ggb.bkt.clouddn.com/fb4c3551-d246-4c89-87f2-485260cf1daa.png">
-<meta property="og:updated_time" content="2018-03-14T14:47:19.004Z">
+<meta property="og:updated_time" content="2018-03-14T14:53:17.726Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kafka 命令行">
-<meta name="twitter:description" content="zookeeper查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者">
+<meta name="twitter:title" content="kafka 常用命令行">
+<meta name="twitter:description" content="查看消费者组:bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list 123console-consumer-70781console-consumer-19936test 其中test是默认的消费者组 console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者,同时会创建一个消">
 <meta name="twitter:image" content="http://p5l4u6ggb.bkt.clouddn.com/fb4c3551-d246-4c89-87f2-485260cf1daa.png">
   
     <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
@@ -87,7 +87,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      kafka 命令行
+      kafka 常用命令行
     </h1>
   
 
@@ -97,7 +97,7 @@
       
         <!-- Table of Contents -->
         
-        <h1 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h1><h2 id="查看消费者组"><a href="#查看消费者组" class="headerlink" title="查看消费者组:"></a>查看消费者组:</h2><p>bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list</p>
+        <h2 id="查看消费者组"><a href="#查看消费者组" class="headerlink" title="查看消费者组:"></a>查看消费者组:</h2><p>bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console-consumer-70781</span><br><span class="line">console-consumer-19936</span><br><span class="line">test</span><br></pre></td></tr></table></figure>
 <p>其中test是默认的消费者组</p>
 <p>console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者,同时会创建一个消费者组.所以命令行消费者不会竞争消费.<br><a id="more"></a></p>
@@ -218,7 +218,7 @@
       
         <strong class="toc-title">文章目录</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#zookeeper"><span class="toc-number">1.</span> <span class="toc-text">zookeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看消费者组"><span class="toc-number">1.1.</span> <span class="toc-text">查看消费者组:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体消费情况"><span class="toc-number">1.2.</span> <span class="toc-text">具体消费情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改偏置"><span class="toc-number">1.3.</span> <span class="toc-text">修改偏置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看topic"><span class="toc-number">1.3.1.</span> <span class="toc-text">查看topic</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka-eagle"><span class="toc-number">1.4.</span> <span class="toc-text">kafka eagle</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看消费者组"><span class="toc-number">1.</span> <span class="toc-text">查看消费者组:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体消费情况"><span class="toc-number">2.</span> <span class="toc-text">具体消费情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改偏置"><span class="toc-number">3.</span> <span class="toc-text">修改偏置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看topic"><span class="toc-number">3.1.</span> <span class="toc-text">查看topic</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka-eagle"><span class="toc-number">4.</span> <span class="toc-text">kafka eagle</span></a></li></ol>
           </div>
       </div>
     </div>

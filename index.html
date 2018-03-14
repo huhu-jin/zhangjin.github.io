@@ -83,7 +83,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/java/kafka/kafka命令行/">kafka 命令行</a>
+      <a class="article-title" href="/2018/03/14/java/kafka/kafka命令行/">kafka 常用命令行</a>
     </h1>
   
 
@@ -91,7 +91,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h1><h2 id="查看消费者组"><a href="#查看消费者组" class="headerlink" title="查看消费者组:"></a>查看消费者组:</h2><p>bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list</p>
+        <h2 id="查看消费者组"><a href="#查看消费者组" class="headerlink" title="查看消费者组:"></a>查看消费者组:</h2><p>bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console-consumer-70781</span><br><span class="line">console-consumer-19936</span><br><span class="line">test</span><br></pre></td></tr></table></figure>
 <p>其中test是默认的消费者组</p>
 <p>console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者,同时会创建一个消费者组.所以命令行消费者不会竞争消费.<br>
@@ -143,7 +143,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>没有用到的类不会加载,程序首先加载main类</p>
+        <p>没有用到的类不会加载,程序首先加载main类</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">父类静态变量    父类静态块(只执行一次)</span><br><span class="line"></span><br><span class="line">子类静态变量    子类静态块(只执行一次)</span><br><span class="line"></span><br><span class="line">父类变量 父类块</span><br><span class="line"></span><br><span class="line">父类构造器</span><br><span class="line"></span><br><span class="line">子类变量 子类块</span><br><span class="line"></span><br><span class="line">子类构造器</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
@@ -520,7 +520,7 @@
       <ul>
         
           <li>
-            <a href="/2018/03/14/java/kafka/kafka命令行/">kafka 命令行</a>
+            <a href="/2018/03/14/java/kafka/kafka命令行/">kafka 常用命令行</a>
           </li>
         
           <li>
