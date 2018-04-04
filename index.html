@@ -143,7 +143,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>没有用到的类不会加载,程序首先加载main类</p>
+        <p>[toc]</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>类的加载:</p>
+<p>1）创建类的实例，也就是new一个对象 </p>
+<p>2）访问某个类或接口的静态变量，或者对该静态变量赋值 </p>
+<p>3）调用类的静态方法 </p>
+<p>4）反射（Class.forName(“com.lyj.load”)） </p>
+<p>5）初始化一个类的子类（会首先初始化子类的父类） </p>
+<p>6）JVM启动时标明的启动类，即文件名和类名相同的那个类</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">父类静态变量    父类静态块(只执行一次)</span><br><span class="line"></span><br><span class="line">子类静态变量    子类静态块(只执行一次)</span><br><span class="line"></span><br><span class="line">父类变量 父类块</span><br><span class="line"></span><br><span class="line">父类构造器</span><br><span class="line"></span><br><span class="line">子类变量 子类块</span><br><span class="line"></span><br><span class="line">子类构造器</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
