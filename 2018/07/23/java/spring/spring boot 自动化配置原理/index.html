@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>spring boot 自动化配置原理 | jin |  blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="@EnableAutoConfiguration启用时候  Spring Boot在启动时扫描项目classpath中JAR包，寻找包含spring.factories文件的JAR包 加载需要自动加载configure   EnableAutoConfigurationImportSelector.selectImports根据beanconditon*过滤不符合条件的configure。  Co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot 自动化配置原理">
+<meta property="og:url" content="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/index.html">
+<meta property="og:site_name" content="jin |  blog">
+<meta property="og:description" content="@EnableAutoConfiguration启用时候  Spring Boot在启动时扫描项目classpath中JAR包，寻找包含spring.factories文件的JAR包 加载需要自动加载configure   EnableAutoConfigurationImportSelector.selectImports根据beanconditon*过滤不符合条件的configure。  Co">
+<meta property="og:image" content="http://www.hollischuang.com/wp-content/uploads/2017/03/r.png">
+<meta property="og:updated_time" content="2018-07-22T15:23:45.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot 自动化配置原理">
+<meta name="twitter:description" content="@EnableAutoConfiguration启用时候  Spring Boot在启动时扫描项目classpath中JAR包，寻找包含spring.factories文件的JAR包 加载需要自动加载configure   EnableAutoConfigurationImportSelector.selectImports根据beanconditon*过滤不符合条件的configure。  Co">
+<meta name="twitter:image" content="http://www.hollischuang.com/wp-content/uploads/2017/03/r.png">
+  
+    <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhangjin.xyz"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">jin |  blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java/spring/spring boot 自动化配置原理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/23/java/spring/spring boot 自动化配置原理/" class="article-date">
+  <time datetime="2018-07-22T16:00:00.000Z" itemprop="datePublished">2018-07-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/springboot/">springboot</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      spring boot 自动化配置原理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>@EnableAutoConfiguration启用时候</p>
+<ol>
+<li><p><code>Spring Boot</code>在启动时扫描项目classpath中JAR包，寻找包含<code>spring.factories</code>文件的JAR包 加载需要自动加载configure </p>
+</li>
+<li><p>EnableAutoConfigurationImportSelector.selectImports根据beanconditon*过滤不符合条件的configure。</p>
+</li>
+<li><p>ConfigurationClassParser.processImports处理加载configure到spring容器</p>
+</li>
+</ol>
+   <a id="more"></a>
+<p>   <img src="http://www.hollischuang.com/wp-content/uploads/2017/03/r.png" alt="r"></p>
+<h2 id="SpringFactoriesLoader-loadFactoryNames"><a href="#SpringFactoriesLoader-loadFactoryNames" class="headerlink" title="SpringFactoriesLoader.loadFactoryNames"></a>SpringFactoriesLoader.loadFactoryNames</h2><p>搜集spring.factories文件 key value 工具类,</p>
+<p>搜集 EnableAutoConfiguration的过程:</p>
+<p>遍历 classpath 中的jar包 META-INF 查找 spring.factories文件中 key:org.springframework.boot.autoconfigure.EnableAutoConfiguration的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public static List&lt;String&gt; loadFactoryNames(Class&lt;?&gt; factoryClass, ClassLoader classLoader) &#123;</span><br><span class="line"> // factoryClassName 为interface org.springframework.boot.autoconfigure.EnableAutoConfiguration</span><br><span class="line">   String factoryClassName = factoryClass.getName();</span><br><span class="line">   try &#123;</span><br><span class="line">      Enumeration&lt;URL&gt; urls = (classLoader != null ? classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :</span><br><span class="line">            ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION));</span><br><span class="line">      List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span><br><span class="line">      while (urls.hasMoreElements()) &#123;</span><br><span class="line">      // jar中 /META-INF/spring.factories的路径</span><br><span class="line">      // 如jar:file:/home/jin/.m2/repository/org/springframework/cloud/spring-cloud-context/1.2.3.RELEASE/spring-cloud-context-1.2.3.RELEASE.jar!/META-INF/spring.factories</span><br><span class="line">         URL url = urls.nextElement();</span><br><span class="line">         // 读取所有的key value的值</span><br><span class="line">         Properties properties = PropertiesLoaderUtils.loadProperties(new UrlResource(url));</span><br><span class="line">         // 获取 key 为org.springframework.boot.autoconfigure.EnableAutoConfiguration的值</span><br><span class="line">         String factoryClassNames = properties.getProperty(factoryClassName);</span><br><span class="line">         result.addAll(Arrays.asList(StringUtils.commaDelimitedListToStringArray(factoryClassNames)));</span><br><span class="line">      &#125;</span><br><span class="line">      return result;</span><br><span class="line">   &#125;</span><br><span class="line">   catch (IOException ex) &#123;</span><br><span class="line">      throw new IllegalArgumentException(&quot;Unable to load [&quot; + factoryClass.getName() +</span><br><span class="line">            &quot;] factories from location [&quot; + FACTORIES_RESOURCE_LOCATION + &quot;]&quot;, ex);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="EnableAutoConfigurationImportSelector"><a href="#EnableAutoConfigurationImportSelector" class="headerlink" title="EnableAutoConfigurationImportSelector"></a>EnableAutoConfigurationImportSelector</h2><p>筛选符合需要起作用的AutoConfiguration</p>
+<p>EnableAutoConfigurationImportSelector 在@EnableAutoConfiguration注解中引入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public String[] selectImports(AnnotationMetadata annotationMetadata) &#123;</span><br><span class="line">		if (!isEnabled(annotationMetadata)) &#123;</span><br><span class="line">			return NO_IMPORTS;</span><br><span class="line">		&#125;</span><br><span class="line">		try &#123;</span><br><span class="line">			AutoConfigurationMetadata autoConfigurationMetadata = AutoConfigurationMetadataLoader</span><br><span class="line">					.loadMetadata(this.beanClassLoader);</span><br><span class="line">			AnnotationAttributes attributes = getAttributes(annotationMetadata);</span><br><span class="line">			List&lt;String&gt; configurations = getCandidateConfigurations(annotationMetadata,</span><br><span class="line">					attributes);</span><br><span class="line">			configurations = removeDuplicates(configurations);</span><br><span class="line">			configurations = sort(configurations, autoConfigurationMetadata);</span><br><span class="line">			Set&lt;String&gt; exclusions = getExclusions(annotationMetadata, attributes);</span><br><span class="line">			checkExcludedClasses(configurations, exclusions);</span><br><span class="line">			configurations.removeAll(exclusions);</span><br><span class="line">			configurations = filter(configurations, autoConfigurationMetadata);</span><br><span class="line">			fireAutoConfigurationImportEvents(configurations, exclusions);</span><br><span class="line">			return configurations.toArray(new String[configurations.size()]);</span><br><span class="line">		&#125;</span><br><span class="line">		catch (IOException ex) &#123;</span><br><span class="line">			throw new IllegalStateException(ex);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="AUTO-CONFIGURATION-REPORT"><a href="#AUTO-CONFIGURATION-REPORT" class="headerlink" title="AUTO-CONFIGURATION REPORT"></a>AUTO-CONFIGURATION REPORT</h2><p>当logging.level.root=debug时候会出报告,说明那些match 哪些没有match<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">=========================</span><br><span class="line">AUTO-CONFIGURATION REPORT</span><br><span class="line">=========================</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Positive matches:</span><br><span class="line">-----------------</span><br><span class="line"></span><br><span class="line">   AopAutoConfiguration matched:</span><br><span class="line">      - @ConditionalOnClass found required classes &apos;org.springframework.context.annotation.EnableAspectJAutoProxy&apos;, &apos;org.aspectj.lang.annotation.Aspect&apos;, &apos;org.aspectj.lang.reflect.Advice&apos;; @ConditionalOnMissingClass did not find unwanted class (OnClassCondition)</span><br><span class="line">      - @ConditionalOnProperty (spring.aop.auto=true) matched (OnPropertyCondition)</span><br><span class="line">....</span><br><span class="line">Negative matches:</span><br><span class="line">-----------------</span><br><span class="line"></span><br><span class="line">   ActiveMQAutoConfiguration:</span><br><span class="line">      Did not match:</span><br><span class="line">         - @ConditionalOnClass did not find required classes &apos;javax.jms.ConnectionFactory&apos;, &apos;org.apache.activemq.ActiveMQConnectionFactory&apos; (OnClassCondition)</span><br><span class="line">....</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接:"></a>参考链接:</h2><blockquote>
+<p><a href="http://www.hollischuang.com/archives/1791" target="_blank" rel="noopener">http://www.hollischuang.com/archives/1791</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/" data-id="cjjwzta2n0000bx7c9zzwejoj" class="article-share-link">Share</a>
+      
+      
+        <a href="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =3
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/14/java/kafka/kafka命令行/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">kafka 常用命令行</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+    <section id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+      </section>
+      
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringFactoriesLoader-loadFactoryNames"><span class="toc-number">1.</span> <span class="toc-text">SpringFactoriesLoader.loadFactoryNames</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EnableAutoConfigurationImportSelector"><span class="toc-number">2.</span> <span class="toc-text">EnableAutoConfigurationImportSelector</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUTO-CONFIGURATION-REPORT"><span class="toc-number">3.</span> <span class="toc-text">AUTO-CONFIGURATION REPORT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">4.</span> <span class="toc-text">参考链接:</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Zhang Jin&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;jinzhang@hotline@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+<script>
+  var disqus_shortname = 'huhu-jin';
+  
+  var disqus_url = 'http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>
