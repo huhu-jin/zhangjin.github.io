@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>spring restTemplate 提交multipart/from-data 请求 | jin |  blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="基础简介是把不同的媒体类型(如图片,json等)放在一个表单中,提交.报文结构大体如下12345678总的header内容(说明了分隔标志) -----内容分隔标志分块的头1内容1-----内容分隔标志分块的头2内容2-----内容分隔标志">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring restTemplate 提交multipart&#x2F;from-data 请求">
+<meta property="og:url" content="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/index.html">
+<meta property="og:site_name" content="jin |  blog">
+<meta property="og:description" content="基础简介是把不同的媒体类型(如图片,json等)放在一个表单中,提交.报文结构大体如下12345678总的header内容(说明了分隔标志) -----内容分隔标志分块的头1内容1-----内容分隔标志分块的头2内容2-----内容分隔标志">
+<meta property="og:updated_time" content="2018-07-29T04:34:38.172Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring restTemplate 提交multipart&#x2F;from-data 请求">
+<meta name="twitter:description" content="基础简介是把不同的媒体类型(如图片,json等)放在一个表单中,提交.报文结构大体如下12345678总的header内容(说明了分隔标志) -----内容分隔标志分块的头1内容1-----内容分隔标志分块的头2内容2-----内容分隔标志">
+  
+    <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhangjin.xyz"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">jin |  blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java/spring/spring restTemplate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/25/java/spring/spring restTemplate/" class="article-date">
+  <time datetime="2018-07-24T16:00:00.000Z" itemprop="datePublished">2018-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/spring-restTemplate/">spring restTemplate</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      spring restTemplate 提交multipart/from-data 请求
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="基础简介"><a href="#基础简介" class="headerlink" title="基础简介"></a>基础简介</h1><p>是把不同的媒体类型(如图片,json等)放在一个表单中,提交.<br>报文结构大体如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">总的header内容(说明了分隔标志) </span><br><span class="line">-----内容分隔标志</span><br><span class="line">分块的头1</span><br><span class="line">内容1</span><br><span class="line">-----内容分隔标志</span><br><span class="line">分块的头2</span><br><span class="line">内容2</span><br><span class="line">-----内容分隔标志</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>下面是postMan的请求报文<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">POST /test/file HTTP/1.1</span><br><span class="line">cache-control: no-cache</span><br><span class="line">User-Agent: PostmanRuntime/6.4.0</span><br><span class="line">Accept: */*</span><br><span class="line">Host: 127.0.0.1:8080</span><br><span class="line">accept-encoding: gzip, deflate</span><br><span class="line">content-type: multipart/form-data; boundary=--------------------------117743330228873261049708</span><br><span class="line">content-length: 25575</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">----------------------------117743330228873261049708</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;Selection_011.png&quot;</span><br><span class="line">Content-Type: image/png</span><br><span class="line">....图片的内容省略...</span><br><span class="line">----------------------------117743330228873261049708</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;</span><br><span class="line"></span><br><span class="line">&quot;hello world&quot;</span><br><span class="line">----------------------------117743330228873261049708--</span><br></pre></td></tr></table></figure></p>
+<h1 id="提交-multipart-from-data-请求"><a href="#提交-multipart-from-data-请求" class="headerlink" title="提交 multipart/from-data 请求"></a>提交 multipart/from-data 请求</h1><ul>
+<li>代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">String url = &quot;http://127.0.0.1:8080/test/file&quot;;</span><br><span class="line">RestTemplate restTemplate = new RestTemplate();</span><br><span class="line"></span><br><span class="line">// 图片1</span><br><span class="line">File file1 = new File(&quot;/home/jin/Pictures/Selection_196.png&quot;);</span><br><span class="line">FileSystemResource fileSource1 = new FileSystemResource(file1);</span><br><span class="line">HttpHeaders pictureHeader1 = new HttpHeaders();</span><br><span class="line">pictureHeader1.add(&quot;Content-Type&quot;, &quot;image/jpeg&quot;); // 图片类型</span><br><span class="line">HttpEntity&lt;FileSystemResource&gt; picturePart1 = new HttpEntity&lt;&gt;(fileSource1, pictureHeader1);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//图片2</span><br><span class="line">File file2 = new File(&quot;/home/jin/Pictures/Selection_197.png&quot;);</span><br><span class="line">FileSystemResource fileSource2 = new FileSystemResource(file2);</span><br><span class="line">HttpHeaders pictureHeader2 = new HttpHeaders();</span><br><span class="line">pictureHeader2.add(&quot;Content-Type&quot;, &quot;image/jpeg&quot;);</span><br><span class="line">HttpEntity&lt;FileSystemResource&gt; picturePart2 = new HttpEntity&lt;&gt;(fileSource2, pictureHeader2);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//json</span><br><span class="line">HttpHeaders jsonHeader = new HttpHeaders();</span><br><span class="line">JSONObject jsonObject = new JSONObject();</span><br><span class="line">jsonObject.put(&quot;name&quot;, &quot;jin&quot;);</span><br><span class="line">jsonObject.put(&quot;age&quot;, &quot;20&quot;);</span><br><span class="line">jsonObject.put(&quot;gender&quot;, &quot;male&quot;);</span><br><span class="line">jsonHeader.add(&quot;Content-Type&quot;, &quot;application/json&quot;);</span><br><span class="line">HttpEntity&lt;String&gt; jsonPart = new HttpEntity&lt;&gt;(JSONObject.toJSONString(jsonObject, SerializerFeature.WRITE_MAP_NULL_FEATURES), jsonHeader);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 总的</span><br><span class="line">HttpHeaders headerTotal = new HttpHeaders();</span><br><span class="line">headerTotal.add(&quot;Content-Type&quot;, &quot;multipart/form-data&quot;);</span><br><span class="line">MultiValueMap&lt;String, Object&gt; total = new LinkedMultiValueMap&lt;&gt;();</span><br><span class="line">total.add(&quot;file&quot;, picturePart1);</span><br><span class="line">total.add(&quot;file&quot;, picturePart2);</span><br><span class="line">total.add(&quot;file&quot;, jsonPart);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HttpEntity&lt;MultiValueMap&lt;String, Object&gt;&gt; requestEntity = new HttpEntity&lt;&gt;(total, headerTotal);</span><br><span class="line">restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="自定义-Boundary"><a href="#自定义-Boundary" class="headerlink" title="自定义 Boundary"></a>自定义 Boundary</h1><ul>
+<li>自定义 Boundary<br>默认后产生随机的数字的,有些奇怪的服务器需要定制Boundary,在template初始化的时候传入自定义的FormHttpMessageConverter<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static class SelfdefineFormHttpMessageConverter extends AllEncompassingFormHttpMessageConverter &#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        protected byte[] generateMultipartBoundary() &#123;</span><br><span class="line">            return &quot;11111111111111111111111111&quot;.getBytes();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RestTemplate restTemplate = new RestTemplate(new ArrayList&lt;&gt;(</span><br><span class="line">       Arrays.asList(new SelfdefineFormHttpMessageConverter(),</span><br><span class="line">               new ByteArrayHttpMessageConverter(),new StringHttpMessageConverter(),</span><br><span class="line">               new ResourceHttpMessageConverter(false),new SourceHttpMessageConverter&lt;&gt;()</span><br><span class="line">               )));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>自定义 Content-Disposition<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jsonHeader.add(&quot;Content-Disposition&quot;,&quot;form-data; name=\&quot;file\&quot;&quot;+&quot;arg1=123&amp;arg2=456 &quot;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/" data-id="cjk6cplnk00002s7c0q555k4q" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =3
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/23/java/spring/spring boot 自动化配置原理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">spring boot 自动化配置原理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+    <section id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+      </section>
+      
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础简介"><span class="toc-number">1.</span> <span class="toc-text">基础简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#提交-multipart-from-data-请求"><span class="toc-number">2.</span> <span class="toc-text">提交 multipart/from-data 请求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义-Boundary"><span class="toc-number">3.</span> <span class="toc-text">自定义 Boundary</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Zhang Jin&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;jinzhang@hotline@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+<script>
+  var disqus_shortname = 'huhu-jin';
+  
+  var disqus_url = 'http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>
