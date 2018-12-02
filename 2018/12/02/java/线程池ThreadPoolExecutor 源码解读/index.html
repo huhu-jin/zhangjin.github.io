@@ -3,14 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>jin |  blog</title>
+  <title>线程池ThreadPoolExecutor 源码解读 | jin |  blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="jin |  blog">
-<meta property="og:url" content="http://zhangjin.xyz/index.html">
+  <meta name="description" content="[TOC] ThreadPoolExecutor 入参1234567int corePoolSize,int maximumPoolSize,long keepAliveTime,TimeUnit unit,BlockingQueue&amp;lt;Runnable&amp;gt; workQueue,ThreadFactory threadFactory,RejectedExecutionHandler han">
+<meta name="keywords" content="源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程池ThreadPoolExecutor 源码解读">
+<meta property="og:url" content="http://zhangjin.xyz/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/index.html">
 <meta property="og:site_name" content="jin |  blog">
+<meta property="og:description" content="[TOC] ThreadPoolExecutor 入参1234567int corePoolSize,int maximumPoolSize,long keepAliveTime,TimeUnit unit,BlockingQueue&amp;lt;Runnable&amp;gt; workQueue,ThreadFactory threadFactory,RejectedExecutionHandler han">
+<meta property="og:image" content="http://1.file.leanote.top/5c037d18ab644152de000396?e=1543739864&token=ym9ZIrtxjozPN4G9he3-FHPOPxAe-OQmxzol5EOk:JPmKGt6bBOVgGswYHZYy4NaZa3A">
+<meta property="og:updated_time" content="2018-12-02T07:38:46.351Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jin |  blog">
+<meta name="twitter:title" content="线程池ThreadPoolExecutor 源码解读">
+<meta name="twitter:description" content="[TOC] ThreadPoolExecutor 入参1234567int corePoolSize,int maximumPoolSize,long keepAliveTime,TimeUnit unit,BlockingQueue&amp;lt;Runnable&amp;gt; workQueue,ThreadFactory threadFactory,RejectedExecutionHandler han">
+<meta name="twitter:image" content="http://1.file.leanote.top/5c037d18ab644152de000396?e=1543739864&token=ym9ZIrtxjozPN4G9he3-FHPOPxAe-OQmxzol5EOk:JPmKGt6bBOVgGswYHZYy4NaZa3A">
   
     <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
   
@@ -63,9 +70,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-java/线程池ThreadPoolExecutor 源码解读" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-java/线程池ThreadPoolExecutor 源码解读" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/" class="article-date">
   <time datetime="2018-12-01T16:00:00.000Z" itemprop="datePublished">2018-12-02</time>
@@ -82,8 +87,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/">线程池ThreadPoolExecutor 源码解读</a>
+    <h1 class="article-title" itemprop="name">
+      线程池ThreadPoolExecutor 源码解读
     </h1>
   
 
@@ -127,594 +132,113 @@
     </footer>
   </div>
   
-</article>
- 
-
-
-  
-    <article id="post-java/spring/spring restTemplate" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/25/java/spring/spring restTemplate/" class="article-date">
-  <time datetime="2018-07-24T16:00:00.000Z" itemprop="datePublished">2018-07-25</time>
-</a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/spring-restTemplate/">spring restTemplate</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/25/java/spring/spring restTemplate/">spring restTemplate 提交multipart/from-data 请求</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="基础简介"><a href="#基础简介" class="headerlink" title="基础简介"></a>基础简介</h1><p>是把不同的媒体类型(如图片,json等)放在一个表单中,提交.<br>报文结构大体如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">总的header内容(说明了分隔标志) </span><br><span class="line">-----内容分隔标志</span><br><span class="line">分块的头1</span><br><span class="line">内容1</span><br><span class="line">-----内容分隔标志</span><br><span class="line">分块的头2</span><br><span class="line">内容2</span><br><span class="line">-----内容分隔标志</span><br></pre></td></tr></table></figure></p>
-        
-          <p class="article-more-link">
-            <a href="/2018/07/25/java/spring/spring restTemplate/#more">继续阅读全文 »</a>
-          </p>
-        
-      
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =3
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
     </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/" data-id="cjk6cplnk00002s7c0q555k4q" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
   </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/25/java/spring/spring restTemplate/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">spring restTemplate 提交multipart/from-data 请求</div>
+    </a>
+  
+</nav>
+
   
 </article>
  
-
-
-  
-    <article id="post-java/spring/spring boot 自动化配置原理" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/23/java/spring/spring boot 自动化配置原理/" class="article-date">
-  <time datetime="2018-07-22T16:00:00.000Z" itemprop="datePublished">2018-07-23</time>
-</a>
+     
+  <div class="comments" id="comments">
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/springboot/">springboot</a>
+     
+    <section id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+      </section>
+      
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
   </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/23/java/spring/spring boot 自动化配置原理/">spring boot 自动化配置原理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>@EnableAutoConfiguration启用时候</p>
-<ol>
-<li><p><code>Spring Boot</code>在启动时扫描项目classpath中JAR包，寻找包含<code>spring.factories</code>文件的JAR包 加载需要自动加载configure </p>
-</li>
-<li><p>EnableAutoConfigurationImportSelector.selectImports根据beanconditon*过滤不符合条件的configure。</p>
-</li>
-<li><p>ConfigurationClassParser.processImports处理加载configure到spring容器</p>
-</li>
-</ol>
-        
-          <p class="article-more-link">
-            <a href="/2018/07/23/java/spring/spring boot 自动化配置原理/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/" data-id="cjjwzta2n0000bx7c9zzwejoj" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
  
-
-
-  
-    <article id="post-java/kafka/kafka命令行" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/14/java/kafka/kafka命令行/" class="article-date">
-  <time datetime="2018-03-13T16:00:00.000Z" itemprop="datePublished">2018-03-14</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/kafka/">kafka</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/java/kafka/kafka命令行/">kafka 常用命令行</a>
-    </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="查看消费者组"><a href="#查看消费者组" class="headerlink" title="查看消费者组:"></a>查看消费者组:</h2><p>bin/kafka-consumer-groups.sh –bootstrap-server 192.168.137.51:9092 –list</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console-consumer-70781</span><br><span class="line">console-consumer-19936</span><br><span class="line">test</span><br></pre></td></tr></table></figure>
-<p>其中test是默认的消费者组</p>
-<p>console-consumer 是命令行控制台 的消费者组.每次新启动一个命令行消费者,同时会创建一个消费者组.所以命令行消费者不会竞争消费.<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/03/14/java/kafka/kafka命令行/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/" data-id="cjer7aqhf000zq47c4ozopo35" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-java/java 的执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/08/java/java 的执行顺序/" class="article-date">
-  <time datetime="2018-03-07T16:00:00.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/java/">java</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/java/java 的执行顺序/">java 的执行顺序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>[toc]</p>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>类的加载:</p>
-<p>1）创建类的实例，也就是new一个对象 </p>
-<p>2）访问某个类或接口的静态变量，或者对该静态变量赋值 </p>
-<p>3）调用类的静态方法 </p>
-<p>4）反射（Class.forName(“com.lyj.load”)） </p>
-<p>5）初始化一个类的子类（会首先初始化子类的父类） </p>
-<p>6）JVM启动时标明的启动类，即文件名和类名相同的那个类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">父类静态变量    父类静态块(只执行一次)</span><br><span class="line"></span><br><span class="line">子类静态变量    子类静态块(只执行一次)</span><br><span class="line"></span><br><span class="line">父类变量 父类块</span><br><span class="line"></span><br><span class="line">父类构造器</span><br><span class="line"></span><br><span class="line">子类变量 子类块</span><br><span class="line"></span><br><span class="line">子类构造器</span><br></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2018/03/08/java/java 的执行顺序/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/03/08/java/java 的执行顺序/" data-id="cjer7aqdg0001q47c9l4x0yg2" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2018/03/08/java/java 的执行顺序/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础/">基础</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-python/生产环境持续集成" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/24/python/生产环境持续集成/" class="article-date">
-  <time datetime="2018-01-23T16:00:00.000Z" itemprop="datePublished">2018-01-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/24/python/生产环境持续集成/">django 部署 持续集成</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-基础环境"><a href="#1-基础环境" class="headerlink" title="1 基础环境"></a>1 基础环境</h1><h3 id="添加一个非root管理员"><a href="#添加一个非root管理员" class="headerlink" title="添加一个非root管理员"></a>添加一个非root管理员</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useradd -m jin</span><br><span class="line">passwd jin</span><br><span class="line"># 添加sudo权限</span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line">vim /etc/sudoers</span><br><span class="line">chmod u-w /etc/sudoers</span><br></pre></td></tr></table></figure>
-<p>允许ssh登陆<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/01/24/python/生产环境持续集成/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/01/24/python/生产环境持续集成/" data-id="cjer7aqei0006q47cwgca1lu9" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2018/01/24/python/生产环境持续集成/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/配置/">配置</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-java/kafka/kafka debezium配置" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/22/java/kafka/kafka debezium配置/" class="article-date">
-  <time datetime="2018-01-21T16:00:00.000Z" itemprop="datePublished">2018-01-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/java/">java</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/22/java/kafka/kafka debezium配置/">kafka debezium配置</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>﻿# debezium 配置</p>
-<h1 id="mysql配置"><a href="#mysql配置" class="headerlink" title="mysql配置"></a>mysql配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">server-id=1</span><br><span class="line">log_bin=mysql-bin</span><br><span class="line">binlog_format=row</span><br><span class="line">binlog_row_image=full</span><br></pre></td></tr></table></figure>
-<p>创建一个用户</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CREATE USER &apos;debezium&apos;@&apos;%&apos; IDENTIFIED BY &apos;Ku1LsgVs5XLN&apos;;</span><br><span class="line">GRANT SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;debezium&apos; IDENTIFIED BY &apos;Ku1LsgVs5XLN&apos;;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
-<h2 id="debezium-配置"><a href="#debezium-配置" class="headerlink" title="debezium 配置"></a>debezium 配置</h2><ul>
-<li>下载 conflution官网下载社区版 tar.gz<br><a href="https://www.confluent.io/download/" target="_blank" rel="noopener">https://www.confluent.io/download/</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./bin/confluent start  schema-registry</span><br><span class="line">-----------------------------------------</span><br><span class="line">$ ./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties</span><br><span class="line">$ ./bin/kafka-server-start ./etc/kafka/server.properties</span><br><span class="line">$ ./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties</span><br></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2018/01/22/java/kafka/kafka debezium配置/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/01/22/java/kafka/kafka debezium配置/" data-id="cjer7aqgw000wq47cdgetv7ku" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2018/01/22/java/kafka/kafka debezium配置/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/配置/">配置</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-python/获取文字显示宽度" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/24/python/获取文字显示宽度/" class="article-date">
-  <time datetime="2017-08-23T16:00:00.000Z" itemprop="datePublished">2017-08-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/24/python/获取文字显示宽度/">python 获取文字显示宽度</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>python 获取中文字符的显示宽度<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/08/24/python/获取文字显示宽度/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/" data-id="cjer7aqem0007q47ckup6qnyf" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技/">技</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-java/hibernate/hibernate关系" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/08/java/hibernate/hibernate关系/" class="article-date">
-  <time datetime="2017-01-07T16:00:00.000Z" itemprop="datePublished">2017-01-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/java/">java</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/08/java/hibernate/hibernate关系/">hibernate基于注解的关系举例</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>mappedBy父表,外键在mappedBy表的对面</p>
-<p>这里举例都是双向连接</p>
-<h2 id="OneToMany"><a href="#OneToMany" class="headerlink" title="@OneToMany"></a>@OneToMany</h2><p>一对多,人是一,手机是多.人是主表</p>
-<p>person.java</p>
-        
-          <p class="article-more-link">
-            <a href="/2017/01/08/java/hibernate/hibernate关系/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2017/01/08/java/hibernate/hibernate关系/" data-id="cjkqzcmdn0000l67cumn3vj4z" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2017/01/08/java/hibernate/hibernate关系/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础-hibernate/">基础 hibernate</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-python/进程(process),线程(thread)，协程( coroutine)，并发，异步" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" class="article-date">
-  <time datetime="2016-11-10T04:39:04.000Z" itemprop="datePublished">2016-11-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/">进程(process),线程(thread)，协程( coroutine)，并发，异步</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-GIL"><a href="#1-GIL" class="headerlink" title="1 GIL"></a>1 GIL</h2><p>计算密集型(cpu-bound)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countdown</span><span class="params">(n)</span>:</span></span><br><span class="line">         <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">         n -= <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>顺序执行两次<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COUNT = 100000000 </span><br><span class="line">countdown(COUNT)</span><br><span class="line">countdown(COUNT)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-        
-          <p class="article-more-link">
-            <a href="/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" data-id="cjer7aqes000bq47cvilv5k63" class="article-share-link">Share</a>
-      
-      
-        <a href="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础知识/">基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/法/">法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next&raquo;</a>
-  </nav>
 </section>
            
     <aside id="sidebar">
   
     
-  
+    <div class="widget-wrap">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title categories">Categories</h3>
-    <div class="widget" id="categories">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-restTemplate/">spring restTemplate</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">1</span></li></ul>
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ThreadPoolExecutor-入参"><span class="toc-number">1.</span> <span class="toc-text">ThreadPoolExecutor 入参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要源码解析"><span class="toc-number">2.</span> <span class="toc-text">主要源码解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#execute"><span class="toc-number">2.1.</span> <span class="toc-text">execute</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#addWorker"><span class="toc-number">2.2.</span> <span class="toc-text">addWorker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#runWorker"><span class="toc-number">2.3.</span> <span class="toc-text">runWorker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getTask"><span class="toc-number">2.4.</span> <span class="toc-text">getTask</span></a></li></ol></li></ol>
+          </div>
+      </div>
     </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title tagcloud">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/基础/" style="font-size: 14px; color: #00f">基础</a> <a href="/tags/基础-hibernate/" style="font-size: 14px; color: #00f">基础 hibernate</a> <a href="/tags/基础知识/" style="font-size: 14px; color: #00f">基础知识</a> <a href="/tags/技/" style="font-size: 25px; color: #ee82ee">技</a> <a href="/tags/法/" style="font-size: 25px; color: #ee82ee">法</a> <a href="/tags/源码/" style="font-size: 14px; color: #00f">源码</a> <a href="/tags/配置/" style="font-size: 25px; color: #ee82ee">配置</a>
-    </div>
-  </div>
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/">线程池ThreadPoolExecutor 源码解读</a>
-          </li>
-        
-          <li>
-            <a href="/2018/07/25/java/spring/spring restTemplate/">spring restTemplate 提交multipart/from-data 请求</a>
-          </li>
-        
-          <li>
-            <a href="/2018/07/23/java/spring/spring boot 自动化配置原理/">spring boot 自动化配置原理</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/14/java/kafka/kafka命令行/">kafka 常用命令行</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/08/java/java 的执行顺序/">java 的执行顺序</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
 
   
     
-  <div class="widget-wrap">
-     
-    <div class="widget follow">
-      
-              <a class="github" aria-hidden="true" href="https://github.com/giscafer" target="_blank" title="Github"></a>
-      
-      
-      
-      
-            <a class="email" aria-hidden="true"  href="mailto:jinzhang@hotline@163.com" target="_blank" title="邮箱"></a>
-      
-    </div>
-  </div>
-
+  
+    
+  
+    
 
   
     
-<div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
-    <div class="widget">
-        <ul>
-            
-            <li>
-                <a href="http://code.giffox.com">程序员导航</a>
-            </li>
-            
-            <li>
-                <a href="http://chuangzaoshi.com">创造狮导航</a>
-            </li>
-            
-        </ul>
-    </div>
-</div>
-
   
 </aside>
 
@@ -758,11 +282,13 @@ window.onload = function() {
 <script>
   var disqus_shortname = 'huhu-jin';
   
+  var disqus_url = 'http://zhangjin.xyz/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
