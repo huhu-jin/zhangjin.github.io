@@ -37,7 +37,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhangjin.xyz"></form>
@@ -91,8 +91,6 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- Table of Contents -->
-        
         <p>[TOC]</p>
 <h2 id="ThreadPoolExecutor-入参"><a href="#ThreadPoolExecutor-入参" class="headerlink" title="ThreadPoolExecutor 入参"></a>ThreadPoolExecutor 入参</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> corePoolSize,</span><br><span class="line"><span class="keyword">int</span> maximumPoolSize,</span><br><span class="line"><span class="keyword">long</span> keepAliveTime,</span><br><span class="line">TimeUnit unit,</span><br><span class="line">BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">ThreadFactory threadFactory,</span><br><span class="line">RejectedExecutionHandler handler</span><br></pre></td></tr></table></figure>
 <ul>
@@ -102,24 +100,19 @@
 <li>unit：　时间单位</li>
 <li>workQueue：　阻塞队列　可以无长队列　定长队列　零长队列</li>
 <li>ThreadFactory：　线程工厂，典型使用，设置线程为守护线程，让线程池随着主线程退出</li>
-<li>handler：　加入队列失败的策略主要有四种，CallerRunsPolicy（让主线执行任务），AbortPolicy（程序直接抛出异常），DiscardPolicy（默默的抛弃当前任务），DiscardOldestPolicy（抛弃最老的任务）</li>
-</ul>
-<p>##流程</p>
-<p><img src="http://1.file.leanote.top/5c037d18ab644152de000396?e=1543739864&amp;token=ym9ZIrtxjozPN4G9he3-FHPOPxAe-OQmxzol5EOk:JPmKGt6bBOVgGswYHZYy4NaZa3A" alt="title"></p>
-<h2 id="主要源码解析"><a href="#主要源码解析" class="headerlink" title="主要源码解析"></a>主要源码解析</h2><p>主要解析以下四个主要的方法</p>
-<h3 id="execute"><a href="#execute" class="headerlink" title="execute"></a>execute</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (command == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        <span class="keyword">int</span> c = ctl.get(); <span class="comment">// 获得当前的线程状态和数量</span></span><br><span class="line">        <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) &#123;</span><br><span class="line">            <span class="comment">//当前线程数量 小于核心线程数 直接addWork 新建线程,执行task</span></span><br><span class="line">            <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>))</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            c = ctl.get();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 当前线程大于核心线程时候,尝试加入阻塞队列</span></span><br><span class="line">        <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) &#123;</span><br><span class="line">            <span class="comment">// 成功后 dubble check</span></span><br><span class="line">            <span class="keyword">int</span> recheck = ctl.get();</span><br><span class="line">            <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))</span><br><span class="line">                reject(command);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)</span><br><span class="line">                addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 加入队列失败,再次添加新的线程执行任务</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))</span><br><span class="line">            <span class="comment">// 新建线程失败,执行失败的逻辑</span></span><br><span class="line">            reject(command);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="addWorker"><a href="#addWorker" class="headerlink" title="addWorker"></a>addWorker</h3><p>worker是Thread的包装类,主要负责真正的业务执行</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">addWorker</span><span class="params">(Runnable firstTask, <span class="keyword">boolean</span> core)</span> </span>&#123;</span><br><span class="line">        retry:</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="keyword">int</span> c = ctl.get();</span><br><span class="line">            <span class="keyword">int</span> rs = runStateOf(c);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 检查 线程池状态</span></span><br><span class="line">            <span class="keyword">if</span> (rs &gt;= SHUTDOWN &amp;&amp;</span><br><span class="line">                ! (rs == SHUTDOWN &amp;&amp;</span><br><span class="line">                   firstTask == <span class="keyword">null</span> &amp;&amp;</span><br><span class="line">                   ! workQueue.isEmpty()))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                <span class="keyword">int</span> wc = workerCountOf(c);</span><br><span class="line">                <span class="keyword">if</span> (wc &gt;= CAPACITY ||</span><br><span class="line">                    wc &gt;= (core ? corePoolSize : maximumPoolSize))</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">if</span> (compareAndIncrementWorkerCount(c))</span><br><span class="line">                    <span class="keyword">break</span> retry;</span><br><span class="line">                c = ctl.get();  <span class="comment">// Re-read ctl</span></span><br><span class="line">                <span class="keyword">if</span> (runStateOf(c) != rs)</span><br><span class="line">                    <span class="keyword">continue</span> retry;</span><br><span class="line">                <span class="comment">// else CAS failed due to workerCount change; retry inner loop</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> workerStarted = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">boolean</span> workerAdded = <span class="keyword">false</span>;</span><br><span class="line">        Worker w = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// new 一个Worker</span></span><br><span class="line">            w = <span class="keyword">new</span> Worker(firstTask);</span><br><span class="line">            <span class="keyword">final</span> Thread t = w.thread;</span><br><span class="line">            <span class="keyword">if</span> (t != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">final</span> ReentrantLock mainLock = <span class="keyword">this</span>.mainLock;</span><br><span class="line">                mainLock.lock();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                </span><br><span class="line">                    <span class="keyword">int</span> rs = runStateOf(ctl.get());</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (rs &lt; SHUTDOWN ||</span><br><span class="line">                        (rs == SHUTDOWN &amp;&amp; firstTask == <span class="keyword">null</span>)) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (t.isAlive()) <span class="comment">// precheck that t is startable</span></span><br><span class="line">                            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalThreadStateException();</span><br><span class="line">                        workers.add(w);</span><br><span class="line">                        <span class="keyword">int</span> s = workers.size();</span><br><span class="line">                        <span class="keyword">if</span> (s &gt; largestPoolSize)</span><br><span class="line">                            largestPoolSize = s;</span><br><span class="line">                        workerAdded = <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    mainLock.unlock();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (workerAdded) &#123;</span><br><span class="line">                    t.start(); <span class="comment">// 启动线程</span></span><br><span class="line">                    workerStarted = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (! workerStarted)</span><br><span class="line">                addWorkerFailed(w);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> workerStarted;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="runWorker"><a href="#runWorker" class="headerlink" title="runWorker"></a>runWorker</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">final void runWorker(Worker w) &#123;</span><br><span class="line">        Thread wt = Thread.currentThread();</span><br><span class="line">        Runnable task = w.firstTask;</span><br><span class="line">        w.firstTask = null;</span><br><span class="line">        w.unlock(); // allow interrupts</span><br><span class="line">        boolean completedAbruptly = true;</span><br><span class="line">        try &#123;</span><br><span class="line">            // getTask 获取任务</span><br><span class="line">            while (task != null || (task = getTask()) != null) &#123;</span><br><span class="line">                w.lock();</span><br><span class="line">                if ((runStateAtLeast(ctl.get(), STOP) ||</span><br><span class="line">                     (Thread.interrupted() &amp;&amp;</span><br><span class="line">                      runStateAtLeast(ctl.get(), STOP))) &amp;&amp;</span><br><span class="line">                    !wt.isInterrupted())</span><br><span class="line">                    wt.interrupt();</span><br><span class="line">                try &#123;</span><br><span class="line">                    beforeExecute(wt, task); // 执行任务的前后 回调</span><br><span class="line">                    Throwable thrown = null;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        task.run();</span><br><span class="line">                    &#125; catch (RuntimeException x) &#123;</span><br><span class="line">                        thrown = x; throw x;</span><br><span class="line">                    &#125; catch (Error x) &#123;</span><br><span class="line">                        thrown = x; throw x;</span><br><span class="line">                    &#125; catch (Throwable x) &#123;</span><br><span class="line">                        thrown = x; throw new Error(x);</span><br><span class="line">                    &#125; finally &#123;</span><br><span class="line">                        // 执行任务的前后 回调</span><br><span class="line">                        afterExecute(task, thrown);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    task = null;</span><br><span class="line">                    w.completedTasks++;</span><br><span class="line">                    w.unlock();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            completedAbruptly = false;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            processWorkerExit(w, completedAbruptly);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="getTask"><a href="#getTask" class="headerlink" title="getTask"></a>getTask</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">private Runnable getTask() &#123;</span><br><span class="line">        boolean timedOut = false;  time out?</span><br><span class="line"></span><br><span class="line">        for (;;) &#123;</span><br><span class="line">            int c = ctl.get();</span><br><span class="line">            int rs = runStateOf(c);</span><br><span class="line">            if (rs &gt;= SHUTDOWN &amp;&amp; (rs &gt;= STOP || workQueue.isEmpty())) &#123;</span><br><span class="line">                decrementWorkerCount();</span><br><span class="line">                return null;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            int wc = workerCountOf(c);</span><br><span class="line">            // 当前线程数 大小和核心线程大小</span><br><span class="line">            boolean timed = allowCoreThreadTimeOut || wc &gt; corePoolSize;</span><br><span class="line"></span><br><span class="line">            if ((wc &gt; maximumPoolSize || (timed &amp;&amp; timedOut))</span><br><span class="line">                &amp;&amp; (wc &gt; 1 || workQueue.isEmpty())) &#123;</span><br><span class="line">                if (compareAndDecrementWorkerCount(c))</span><br><span class="line">                    return null;</span><br><span class="line">                continue;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                //根据条件等待任务是否能超时</span><br><span class="line">                Runnable r = timed ?</span><br><span class="line">                    workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS) :</span><br><span class="line">                    workQueue.take();</span><br><span class="line">                if (r != null)</span><br><span class="line">                    return r;</span><br><span class="line">                timedOut = true;</span><br><span class="line">            &#125; catch (InterruptedException retry) &#123;</span><br><span class="line">                timedOut = false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
+<li>handler：　加入队列失败的策略主要有四种，CallerRunsPolicy（让主线执行任务），AbortPolicy（程序直接抛出异常），DiscardPolicy（默默的抛弃当前任务），DiscardOldestPolicy（抛弃最老的任务）
+        
+          <p class="article-more-link">
+            <a href="/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/#more">继续阅读全文 »</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/" data-id="cjp6krrjc0000ok7c8x2smugg" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/" data-id="cjp6krrjc0000ok7c8x2smugg" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/#disqus_thread" class="article-comment-link">留言</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码/">源码</a></li></ul>
@@ -167,10 +160,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/" data-id="cjk6cplnk00002s7c0q555k4q" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/" data-id="cjk6cplnk00002s7c0q555k4q" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2018/07/25/java/spring/spring restTemplate/#disqus_thread" class="article-comment-link">留言</a>
       
       
     </footer>
@@ -224,10 +217,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/" data-id="cjjwzta2n0000bx7c9zzwejoj" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/" data-id="cjjwzta2n0000bx7c9zzwejoj" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2018/07/23/java/spring/spring boot 自动化配置原理/#disqus_thread" class="article-comment-link">留言</a>
       
       
     </footer>
@@ -276,10 +269,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/" data-id="cjer7aqhf000zq47c4ozopo35" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/" data-id="cjer7aqhf000zq47c4ozopo35" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2018/03/14/java/kafka/kafka命令行/#disqus_thread" class="article-comment-link">留言</a>
       
       
     </footer>
@@ -333,10 +326,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/03/08/java/java 的执行顺序/" data-id="cjer7aqdg0001q47c9l4x0yg2" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2018/03/08/java/java 的执行顺序/" data-id="cjer7aqdg0001q47c9l4x0yg2" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2018/03/08/java/java 的执行顺序/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2018/03/08/java/java 的执行顺序/#disqus_thread" class="article-comment-link">留言</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础/">基础</a></li></ul>
@@ -385,10 +378,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/01/24/python/生产环境持续集成/" data-id="cjer7aqei0006q47cwgca1lu9" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2018/01/24/python/生产环境持续集成/" data-id="cjer7aqei0006q47cwgca1lu9" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2018/01/24/python/生产环境持续集成/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2018/01/24/python/生产环境持续集成/#disqus_thread" class="article-comment-link">留言</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/配置/">配置</a></li></ul>
@@ -443,10 +436,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2018/01/22/java/kafka/kafka debezium配置/" data-id="cjer7aqgw000wq47cdgetv7ku" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2018/01/22/java/kafka/kafka debezium配置/" data-id="cjer7aqgw000wq47cdgetv7ku" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2018/01/22/java/kafka/kafka debezium配置/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2018/01/22/java/kafka/kafka debezium配置/#disqus_thread" class="article-comment-link">留言</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/配置/">配置</a></li></ul>
@@ -494,10 +487,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/" data-id="cjer7aqem0007q47ckup6qnyf" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/" data-id="cjer7aqem0007q47ckup6qnyf" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/#disqus_thread" class="article-comment-link">留言</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技/">技</a></li></ul>
@@ -548,10 +541,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2017/01/08/java/hibernate/hibernate关系/" data-id="cjkqzcmdn0000l67cumn3vj4z" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2017/01/08/java/hibernate/hibernate关系/" data-id="cjkqzcmdn0000l67cumn3vj4z" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2017/01/08/java/hibernate/hibernate关系/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2017/01/08/java/hibernate/hibernate关系/#disqus_thread" class="article-comment-link">留言</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础-hibernate/">基础 hibernate</a></li></ul>
@@ -603,10 +596,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" data-id="cjer7aqes000bq47cvilv5k63" class="article-share-link">Share</a>
+      <a data-url="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/" data-id="cjer7aqes000bq47cvilv5k63" class="article-share-link">分享</a>
       
       
-        <a href="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://zhangjin.xyz/2016/11/10/python/进程(process),线程(thread)，协程( coroutine)，并发，异步/#disqus_thread" class="article-comment-link">留言</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础知识/">基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/法/">法</a></li></ul>
@@ -622,7 +615,7 @@
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页&raquo;</a>
   </nav>
 </section>
            
@@ -632,7 +625,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title categories">Categories</h3>
+    <h3 class="widget-title categories">分类</h3>
     <div class="widget" id="categories">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-restTemplate/">spring restTemplate</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">1</span></li></ul>
     </div>
@@ -642,7 +635,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title tagcloud">Tag Cloud</h3>
+    <h3 class="widget-title tagcloud">标签云</h3>
     <div class="widget tagcloud">
       <a href="/tags/基础/" style="font-size: 14px; color: #00f">基础</a> <a href="/tags/基础-hibernate/" style="font-size: 14px; color: #00f">基础 hibernate</a> <a href="/tags/基础知识/" style="font-size: 14px; color: #00f">基础知识</a> <a href="/tags/技/" style="font-size: 25px; color: #ee82ee">技</a> <a href="/tags/法/" style="font-size: 25px; color: #ee82ee">法</a> <a href="/tags/源码/" style="font-size: 14px; color: #00f">源码</a> <a href="/tags/配置/" style="font-size: 25px; color: #ee82ee">配置</a>
     </div>
@@ -651,7 +644,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">Recent Posts</h3>
+    <h3 class="widget-title recent-posts">最新文章</h3>
     <div class="widget">
       <ul>
         
@@ -724,10 +717,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 Zhang Jin&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;jinzhang@hotline@163.com
+      联系方式&nbsp;|&nbsp;jinzhang@hotline@163.com
     </div>
   </div>
 </footer>
