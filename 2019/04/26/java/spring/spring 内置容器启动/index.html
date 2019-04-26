@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>jin |  blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="[toc] spring定义什么是spring?用一句或者几句话描述?spring框架提供了一个容器,这个容器内包含有一些实例化以及初始化好的javaBean,这些bean处理好相互依赖的关系.或者未实例化初始化的BeanDefinition.围绕这些beanDefinition注册和bean获得,容器提供一些扩展如BeanFactoryPostProcessor主要负责beanDefinitio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jin |  blog">
+<meta property="og:url" content="http://zhangjin.xyz/2019/04/26/java/spring/spring 内置容器启动/index.html">
+<meta property="og:site_name" content="jin |  blog">
+<meta property="og:description" content="[toc] spring定义什么是spring?用一句或者几句话描述?spring框架提供了一个容器,这个容器内包含有一些实例化以及初始化好的javaBean,这些bean处理好相互依赖的关系.或者未实例化初始化的BeanDefinition.围绕这些beanDefinition注册和bean获得,容器提供一些扩展如BeanFactoryPostProcessor主要负责beanDefinitio">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://leanote.com/api/file/getImage?fileId=5c9305a0ab6441495d00054d">
+<meta property="og:updated_time" content="2019-04-26T09:16:14.782Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jin |  blog">
+<meta name="twitter:description" content="[toc] spring定义什么是spring?用一句或者几句话描述?spring框架提供了一个容器,这个容器内包含有一些实例化以及初始化好的javaBean,这些bean处理好相互依赖的关系.或者未实例化初始化的BeanDefinition.围绕这些beanDefinition注册和bean获得,容器提供一些扩展如BeanFactoryPostProcessor主要负责beanDefinitio">
+<meta name="twitter:image" content="https://leanote.com/api/file/getImage?fileId=5c9305a0ab6441495d00054d">
+  
+    <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhangjin.xyz"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">jin |  blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java/spring/spring 内置容器启动" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/26/java/spring/spring 内置容器启动/" class="article-date">
+  <time datetime="2019-04-26T09:16:14.802Z" itemprop="datePublished">2019-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>[toc]</p>
+<h2 id="spring定义"><a href="#spring定义" class="headerlink" title="spring定义"></a>spring定义</h2><p>什么是spring?用一句或者几句话描述?<br>spring框架提供了一个容器,这个容器内包含有一些实例化以及初始化好的javaBean,这些bean处理好相互依赖的关系.或者未实例化初始化的BeanDefinition.围绕这些beanDefinition注册和bean获得,容器提供一些扩展如BeanFactoryPostProcessor主要负责beanDefinition的修改,BeanPostProcessor负责bean的实例化,初始化前后的处理.</p>
+<p><a href="https://i.loli.net/2019/04/26/5cc2cc43866fb.png" target="_blank" rel="noopener">https://i.loli.net/2019/04/26/5cc2cc43866fb.png</a></p>
+<h2 id="beanFactoruPostProcessor"><a href="#beanFactoruPostProcessor" class="headerlink" title="beanFactoruPostProcessor"></a>beanFactoruPostProcessor</h2><p>在bean factory实例化结束,所有的bean 定义记载完成.允许deanDefinition甚至提早实例化bean<br>PropertyPlaceholderConfigurer</p>
+<h2 id="beanPostProcessor"><a href="#beanPostProcessor" class="headerlink" title="beanPostProcessor"></a>beanPostProcessor</h2><p><img src="https://leanote.com/api/file/getImage?fileId=5c9305a0ab6441495d00054d" alt="title"></p>
+<p>BeanPostProcessor</p>
+<p>postProcessBeforeInitialization 初始化前扩展(执行init-method前)<br>postProcessAfterInitialization 初始化后扩展(执行init-method后)<br>InstantiationAwareBeanPostProcessor</p>
+<p>postProcessBeforeInstantiation 对象实例化前扩展<br>postProcessAfterInstantiation 对象实例化后扩展<br>postProcessPropertyValues 属性依赖注入前扩展<br>SmartInstantiationAwareBeanPostProcessor</p>
+<p>predictBeanType 预测bean的类型，在beanFactory的getType时被调用<br>determineCandidateConstructors 对象实例化时决定要使用的构造函数时被调用<br>getEarlyBeanReference 循环依赖处理时获取Early对象引用时被调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1 BFPP  postBPP  ---invokeBeanFactoryPostProcessors </span><br><span class="line">2 IABPP before   (InstantiationAwareBeanPostProcessor)  --createBean</span><br><span class="line">3 bean 反射调用构造方法 实例化</span><br><span class="line">4 MBPP (MergedBeanDefinitionPostProcessor)  加载 属性定义</span><br><span class="line">5 populateBean 设置属性</span><br><span class="line">    5.1 IABPP after</span><br><span class="line">    5.2 IABPP setproperty</span><br><span class="line">    5.3 applyPropertyValues </span><br><span class="line">6 initializeBean 初始化</span><br><span class="line">    6.1 invokeAwareMethods</span><br><span class="line">    6.2 bpp before</span><br><span class="line">    6.3 InitializingBean.afterPropertiesSet  (接口InitializingBean)</span><br><span class="line">    6.4 initMethodName @bean init-method</span><br><span class="line">    6.5 bpp after (aop)</span><br><span class="line">7 SmartInitializingSingleton</span><br><span class="line">8 dispose</span><br><span class="line">9 destory-method</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public ConfigurableApplicationContext run(String... args) &#123;</span><br><span class="line">StopWatch stopWatch = new StopWatch(); // 记录启动的时间</span><br><span class="line">stopWatch.start(); </span><br><span class="line">ConfigurableApplicationContext context = null;</span><br><span class="line">Collection&lt;SpringBootExceptionReporter&gt; exceptionReporters = new ArrayList&lt;&gt;();</span><br><span class="line">configureHeadlessProperty(); // 环境变量设置</span><br><span class="line">SpringApplicationRunListeners listeners = getRunListeners(args);</span><br><span class="line">listeners.starting();</span><br><span class="line">try &#123;</span><br><span class="line">	ApplicationArguments applicationArguments = new DefaultApplicationArguments(args); // 将驱动参数包装成参数类</span><br><span class="line">	ConfigurableEnvironment environment = prepareEnvironment(listeners,</span><br><span class="line">			applicationArguments);</span><br><span class="line">	configureIgnoreBeanInfo(environment);</span><br><span class="line">	Banner printedBanner = printBanner(environment);</span><br><span class="line">	// 默认创建 AnnotationConfigServletWebServerApplicationContext</span><br><span class="line">	// 创建应用上下文，并实例化了其三个属性：reader、scanner和beanFactory</span><br><span class="line">	context = createApplicationContext(); </span><br><span class="line">	exceptionReporters = getSpringFactoriesInstances(</span><br><span class="line">			SpringBootExceptionReporter.class,</span><br><span class="line">			new Class[] &#123; ConfigurableApplicationContext.class &#125;, context); // 异常处器</span><br><span class="line">	prepareContext(context, environment, listeners, applicationArguments,</span><br><span class="line">			printedBanner); // 准备上下文环境</span><br><span class="line">	refreshContext(context); // 见启动过程简述2</span><br><span class="line">	afterRefresh(context, applicationArguments);</span><br><span class="line">	stopWatch.stop();</span><br><span class="line">	if (this.logStartupInfo) &#123;</span><br><span class="line">		new StartupInfoLogger(this.mainApplicationClass)</span><br><span class="line">				.logStarted(getApplicationLog(), stopWatch);</span><br><span class="line">	&#125;</span><br><span class="line">	listeners.started(context);</span><br><span class="line">	callRunners(context, applicationArguments);</span><br><span class="line">&#125;</span><br><span class="line">catch (Throwable ex) &#123;</span><br><span class="line">	handleRunFailure(context, listeners, exceptionReporters, ex);</span><br><span class="line">	throw new IllegalStateException(ex);</span><br><span class="line">&#125;</span><br><span class="line">listeners.running(context);</span><br><span class="line">return context;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2019/04/26/java/spring/spring 内置容器启动/" data-id="cjuxv3jyy00034w8nji74uw02" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2019/04/26/java/spring/spring 内置容器启动/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =3
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/02/java/ThreadLocal 源码/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">线程池ThreadPoolExecutor 源码解读</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+    <section id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+      </section>
+      
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#spring定义"><span class="toc-number">1.</span> <span class="toc-text">spring定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#beanFactoruPostProcessor"><span class="toc-number">2.</span> <span class="toc-text">beanFactoruPostProcessor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#beanPostProcessor"><span class="toc-number">3.</span> <span class="toc-text">beanPostProcessor</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2019 Zhang Jin&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;jinzhang@hotline@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png">
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+<script>
+  var disqus_shortname = 'huhu-jin';
+  
+  var disqus_url = 'http://zhangjin.xyz/2019/04/26/java/spring/spring 内置容器启动/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>线程池ThreadPoolExecutor 源码解读 | jin |  blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="结构threadloca是一个钥匙,不同的线程拿这个钥匙找到不同的内容 ##ThreadLocalget和set方法都很简单12345678910111213public T get() &amp;#123;    Thread t = Thread.currentThread(); // 当前线程实例    ThreadLocalMap map = getMap(t); // 从当前线程实例中拿到 m">
+<meta name="keywords" content="源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程池ThreadPoolExecutor 源码解读">
+<meta property="og:url" content="http://zhangjin.xyz/2018/12/02/java/ThreadLocal 源码/index.html">
+<meta property="og:site_name" content="jin |  blog">
+<meta property="og:description" content="结构threadloca是一个钥匙,不同的线程拿这个钥匙找到不同的内容 ##ThreadLocalget和set方法都很简单12345678910111213public T get() &amp;#123;    Thread t = Thread.currentThread(); // 当前线程实例    ThreadLocalMap map = getMap(t); // 从当前线程实例中拿到 m">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2019/04/26/5cc2c951ce9a6.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/04/26/5cc2c98c30ee3.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/04/26/5cc2ca1097c18.jpg">
+<meta property="og:updated_time" content="2019-04-26T09:06:54.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线程池ThreadPoolExecutor 源码解读">
+<meta name="twitter:description" content="结构threadloca是一个钥匙,不同的线程拿这个钥匙找到不同的内容 ##ThreadLocalget和set方法都很简单12345678910111213public T get() &amp;#123;    Thread t = Thread.currentThread(); // 当前线程实例    ThreadLocalMap map = getMap(t); // 从当前线程实例中拿到 m">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/26/5cc2c951ce9a6.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="jin |  blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://zhangjin.xyz"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">jin |  blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java/ThreadLocal 源码" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/02/java/ThreadLocal 源码/" class="article-date">
+  <time datetime="2018-12-01T16:00:00.000Z" itemprop="datePublished">2018-12-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      线程池ThreadPoolExecutor 源码解读
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <a id="more"></a>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>threadloca是一个钥匙,不同的线程拿这个钥匙找到不同的内容<br><img src="https://i.loli.net/2019/04/26/5cc2c951ce9a6.jpg" alt="title"></p>
+<p>##ThreadLocal<br>get和set方法都很简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public T get() &#123;</span><br><span class="line">    Thread t = Thread.currentThread(); // 当前线程实例</span><br><span class="line">    ThreadLocalMap map = getMap(t); // 从当前线程实例中拿到 map</span><br><span class="line">    if (map != null) &#123;</span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(this); // 把threadlocal自己作为key去拿值</span><br><span class="line">        if (e != null) &#123;</span><br><span class="line">            @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">            T result = (T)e.value;</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>set<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public void set(T value) &#123;</span><br><span class="line">        Thread t = Thread.currentThread(); // 当前线程实例</span><br><span class="line">        ThreadLocalMap map = getMap(t); // 从当前线程实例中拿到 map</span><br><span class="line">        if (map != null)</span><br><span class="line">            map.set(this, value);// 把threadlocal自己作为key设置</span><br><span class="line">        else</span><br><span class="line">            createMap(t, value);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="ThreadLocalMap"><a href="#ThreadLocalMap" class="headerlink" title="ThreadLocalMap"></a>ThreadLocalMap</h2><p>不能不提这个map是什么?他类似hashmap的实现<br><img src="https://i.loli.net/2019/04/26/5cc2c98c30ee3.jpg" alt="title"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private Entry[] table; // WeakReference是个弱引用,threadlocal引用</span><br></pre></td></tr></table></figure>
+<p>###0x61c88647<br>那么这个”map”的hashcode如何产生的?0x61c88647神奇之数*n,n是产生的theadlocal实例个数.就这么简单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private final int threadLocalHashCode = nextHashCode(); // 新的hashcode</span><br><span class="line"></span><br><span class="line">private static AtomicInteger nextHashCode = new AtomicInteger(); // 计数</span><br><span class="line"></span><br><span class="line">private static final int HASH_INCREMENT = 0x61c88647; //神奇之数</span><br><span class="line"></span><br><span class="line">// 计数 * 神奇之数</span><br><span class="line">private static int nextHashCode() &#123;</span><br><span class="line">        return nextHashCode.getAndAdd(HASH_INCREMENT);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>而且这个数很神奇,他的均匀性很好<br>那么我们验证一下这个这个神奇之数?<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private static int magicNum = 0x61c88647;</span><br><span class="line">public static void generateKey(int count) &#123;</span><br><span class="line">        for (int i = 0; i &lt; count; i++) &#123;</span><br><span class="line">            int key = magicNum * i &amp; (count-1); //分散到32位置</span><br><span class="line">            System.out.print(key+&quot;-&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">generateKey(32);</span><br><span class="line">0-7-14-21-28-3-10-17-24-31-6-13-20-27-2-9-16-23-30-5-12-19-26-1-8-15-22-29-4-11-18-25-</span><br></pre></td></tr></table></figure>
+<p>没有碰撞!!!!</p>
+<h3 id="碰撞如何处理"><a href="#碰撞如何处理" class="headerlink" title="碰撞如何处理"></a>碰撞如何处理</h3><p>开放地址法,当前hashcode计算的index有值了,那我就找下一个,下一个有值再一下一个.一直循环.<br>删除比较麻烦.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private static int nextIndex(int i, int len) &#123;</span><br><span class="line">    return ((i + 1 &lt; len) ? i + 1 : 0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="添加删除"><a href="#添加删除" class="headerlink" title="添加删除"></a>添加删除</h3><p>添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">for (Entry e = tab[i]; //开始条件</span><br><span class="line">     e != null;//运行条件</span><br><span class="line">     e = tab[i = nextIndex(i, len)])// 下一个迭代内容 &#123;</span><br><span class="line">    ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line">    // key 存在，直接覆盖</span><br><span class="line">    if (k == key) &#123;</span><br><span class="line">        e.value = value;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    // key == null，但是存在值（因为此处的e != null），说明之前的ThreadLocal对象已经被回收了</span><br><span class="line">    if (k == null) &#123;</span><br><span class="line">        replaceStaleEntry(key, value, i);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">// ThreadLocal对应的key实例不存在也没有陈旧元素，new 一个</span><br><span class="line">tab[i] = new ThreadLocal.ThreadLocalMap.Entry(key, value);</span><br></pre></td></tr></table></figure></p>
+<p>删除<br>python采用了假的删除,删除位置加空的标记.(好像是这样的)java采用了移动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">private void remove(ThreadLocal&lt;?&gt; key) &#123;</span><br><span class="line">    Entry[] tab = table;</span><br><span class="line">    int len = tab.length;</span><br><span class="line">    int i = key.threadLocalHashCode &amp; (len-1);</span><br><span class="line">    // 从hash值计算出来的index开始找第一个非空的entry</span><br><span class="line">    for (Entry e = tab[i];</span><br><span class="line">         e != null; </span><br><span class="line">         e = tab[i = nextIndex(i, len)]) &#123;</span><br><span class="line">        if (e.get() == key) &#123;</span><br><span class="line">            e.clear();//弱引用释放</span><br><span class="line">            expungeStaleEntry(i); // 清空key value 上移 hashcode碰撞的entry到清空位置</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>expungeStaleEntry清理移动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">private int expungeStaleEntry(int staleSlot) &#123;</span><br><span class="line">    // staleSlot被删除的entry的index</span><br><span class="line">    Entry[] tab = table;</span><br><span class="line">    int len = tab.length;</span><br><span class="line"></span><br><span class="line">    // 将entry值清空</span><br><span class="line">    tab[staleSlot].value = null;</span><br><span class="line">    tab[staleSlot] = null;</span><br><span class="line">    size--;</span><br><span class="line"></span><br><span class="line">    // 调整节点直到遇到 null</span><br><span class="line">    Entry e;</span><br><span class="line">    int i;</span><br><span class="line">    for (i = nextIndex(staleSlot, len); // 从删除的下一个节点开始 </span><br><span class="line">         (e = tab[i]) != null;// 不为空下进行</span><br><span class="line">         i = nextIndex(i, len)) &#123;</span><br><span class="line">        ThreadLocal&lt;?&gt; k = e.get();</span><br><span class="line">        if (k == null) &#123; // key空则回收 </span><br><span class="line">            e.value = null;</span><br><span class="line">            tab[i] = null;</span><br><span class="line">            size--;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            int h = k.threadLocalHashCode &amp; (len - 1);//当前index 是否是hashcode就算出来的index?意思是以前有没有hash碰撞.</span><br><span class="line">            if (h != i) &#123;//以前hash碰撞过</span><br><span class="line">                tab[i] = null;</span><br><span class="line">                </span><br><span class="line">                while (tab[h] != null) //移动到哪里?找一个空的 格子</span><br><span class="line">                    h = nextIndex(h, len);</span><br><span class="line">                tab[h] = e; 还原回去</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>理解不了?看图<br><img src="https://i.loli.net/2019/04/26/5cc2ca1097c18.jpg" alt="title"><br>假设有绿红黄三种threadlocal他们hashcode&amp;(len-1)计算后的index为3,5,6.<br>因为hash冲突,key2,key5分别被放入槽4,7中<br>现在我们删除key2:<br>expungeStaleEntry中staleSlot为4,</p>
+<ul>
+<li>1 那么tab[4]=null,e.value清空槽和entry中的值</li>
+<li>2 for开始从下一个槽,即5槽开始,逐个一个对非空entry进行处理,碰到null跳出</li>
+<li>3 显然5,6槽的k.threadLocalHashCode &amp; (len - 1)出的h和index相同的,他们没有hash冲突,没有下移</li>
+<li>4 7槽 h=3 而当前index为7不相等,所以他要向上移动</li>
+<li>5 移动到哪里?从h=3爱开始(hash不冲突的位置出发),找一个空位置,tab[h] = e设置回去</li>
+</ul>
+<h3 id="扩容resize"><a href="#扩容resize" class="headerlink" title="扩容resize"></a>扩容resize</h3><p>扩容比较简单resize<br>重新计算k.threadLocalHashCode &amp; (newLen - 1)放入相应的位置</p>
+<h2 id="优化FastThreadLocal"><a href="#优化FastThreadLocal" class="headerlink" title="优化FastThreadLocal"></a>优化FastThreadLocal</h2><p>一般threadlocal作为”钥匙”,必然是 static的.不然释放了其他类就拿不到里面的value.那么不需要像hashmap那样new 对象动态计算分配槽位.直接给个index就好了.这样取用就不需要频繁hash了,也不要移来移去了.</p>
+<p>netty中的FastThreadLocal就采用了这样设计,用固定的index代替hash.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uses a constant index in an array, instead of using hash code and hash table,</span><br><span class="line"> to look for a variable.</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2018/12/02/java/ThreadLocal 源码/" data-id="cjuxv3jye00004w8nk6t27yzl" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2018/12/02/java/ThreadLocal 源码/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码/">源码</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =3
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/26/java/spring/spring 内置容器启动/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/02/java/线程池ThreadPoolExecutor 源码解读/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">线程池ThreadPoolExecutor 源码解读</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+    <section id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+      </section>
+      
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#结构"><span class="toc-number">1.</span> <span class="toc-text">结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ThreadLocalMap"><span class="toc-number">2.</span> <span class="toc-text">ThreadLocalMap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#碰撞如何处理"><span class="toc-number">2.1.</span> <span class="toc-text">碰撞如何处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加删除"><span class="toc-number">2.2.</span> <span class="toc-text">添加删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#扩容resize"><span class="toc-number">2.3.</span> <span class="toc-text">扩容resize</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化FastThreadLocal"><span class="toc-number">3.</span> <span class="toc-text">优化FastThreadLocal</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2019 Zhang Jin&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;jinzhang@hotline@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png">
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+<script>
+  var disqus_shortname = 'huhu-jin';
+  
+  var disqus_url = 'http://zhangjin.xyz/2018/12/02/java/ThreadLocal 源码/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>
