@@ -66,6 +66,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-java/lombok基础" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/09/java/lombok基础/" class="article-date">
+  <time datetime="2019-05-08T16:00:00.000Z" itemprop="datePublished">2019-05-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/09/java/lombok基础/">lombok的基础使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#简介<br>Lombok 是一种 Java™ 实用工具，可用来帮助开发人员消除 Java 的冗长，尤其是对于简单的 Java 对象（POJO）。它通过注解实现这一目的。<br><img src="https://i.loli.net/2019/05/09/5cd3d204b23dc.jpeg" alt="title"><br>上图是 Lombok 处理流程，在Javac 解析成抽象语法树之后(AST), Lombok 根据自己的注解处理器，动态的修改 AST，增加新的节点(所谓代码)，最终通过分析和生成字节码。</p>
+<h1 id="Data-重要"><a href="#Data-重要" class="headerlink" title="@Data(重要)"></a>@Data(重要)</h1><p>这个注解相当于下面注解组合:</p>
+<ul>
+<li>@ToString 生成toString方法</li>
+<li>@EqualsAndHashCode 生成Equals和HashCode</li>
+<li>@Getter 所有字段的Getter</li>
+<li>@Setter on all non-final fields 非final字段get方法</li>
+<li>@RequiredArgsConstructor final字段很nonnull字段生成构造器</li>
+</ul>
+<p>举例说明<br>
+        
+          </p><p class="article-more-link">
+            <a href="/2019/05/09/java/lombok基础/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://zhangjin.xyz/2019/05/09/java/lombok基础/" data-id="cjvgbbqt300009a8n72g5uulf" class="article-share-link">分享</a>
+      
+      
+        <a href="http://zhangjin.xyz/2019/05/09/java/lombok基础/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础/">基础</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-java/ThreadLocal 源码" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/26/java/ThreadLocal 源码/" class="article-date">
@@ -580,57 +640,6 @@
 
 
   
-    <article id="post-python/获取文字显示宽度" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/24/python/获取文字显示宽度/" class="article-date">
-  <time datetime="2017-08-23T16:00:00.000Z" itemprop="datePublished">2017-08-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/python/">python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/24/python/获取文字显示宽度/">python 获取文字显示宽度</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>python 获取中文字符的显示宽度<br>
-        
-          </p><p class="article-more-link">
-            <a href="/2017/08/24/python/获取文字显示宽度/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/" data-id="cjer7aqem0007q47ckup6qnyf" class="article-share-link">分享</a>
-      
-      
-        <a href="http://zhangjin.xyz/2017/08/24/python/获取文字显示宽度/#disqus_thread" class="article-comment-link">留言</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技/">技</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
 
 
   <nav id="page-nav">
@@ -646,7 +655,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title categories">分类</h3>
     <div class="widget" id="categories">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-restTemplate/">spring restTemplate</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring-restTemplate/">spring restTemplate</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -656,7 +665,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tagcloud">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/基础/" style="font-size: 14px; color: #00f">基础</a> <a href="/tags/基础-hibernate/" style="font-size: 14px; color: #00f">基础 hibernate</a> <a href="/tags/基础知识/" style="font-size: 14px; color: #00f">基础知识</a> <a href="/tags/技/" style="font-size: 25px; color: #ee82ee">技</a> <a href="/tags/法/" style="font-size: 25px; color: #ee82ee">法</a> <a href="/tags/源码/" style="font-size: 25px; color: #ee82ee">源码</a> <a href="/tags/配置/" style="font-size: 25px; color: #ee82ee">配置</a>
+      <a href="/tags/基础/" style="font-size: 25px; color: #ee82ee">基础</a> <a href="/tags/基础-hibernate/" style="font-size: 14px; color: #00f">基础 hibernate</a> <a href="/tags/基础知识/" style="font-size: 14px; color: #00f">基础知识</a> <a href="/tags/技/" style="font-size: 25px; color: #ee82ee">技</a> <a href="/tags/法/" style="font-size: 25px; color: #ee82ee">法</a> <a href="/tags/源码/" style="font-size: 25px; color: #ee82ee">源码</a> <a href="/tags/配置/" style="font-size: 25px; color: #ee82ee">配置</a>
     </div>
   </div>
 
@@ -666,6 +675,10 @@
     <h3 class="widget-title recent-posts">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/09/java/lombok基础/">lombok的基础使用</a>
+          </li>
         
           <li>
             <a href="/2019/04/26/java/ThreadLocal 源码/">ThreadLocal  源码解读</a>
@@ -681,10 +694,6 @@
         
           <li>
             <a href="/2018/07/25/java/spring/spring restTemplate/">spring restTemplate 提交multipart/from-data 请求</a>
-          </li>
-        
-          <li>
-            <a href="/2018/07/23/java/spring/spring boot 自动化配置原理/">spring boot 自动化配置原理</a>
           </li>
         
       </ul>
